@@ -1,2 +1,4 @@
 paper-slider
 ============
+
+Paper Slider

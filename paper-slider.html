@@ -1,0 +1,116 @@
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+
+<!--
+/**
+ * @group Quantum Paper Elements
+ *
+ * `paper-slider` <b>WIP</b>
+ *
+ * Example:
+ *
+ *    <paper-slider></paper-slider>
+ *
+ * @element paper-slider
+ * @homepage github.io
+ */
+-->
+
+<link rel="import" href="../paper-progress/paper-progress.html">
+
+<polymer-element name="paper-slider" attributes="value min max step">
+
+  <template>
+  
+    <link rel="stylesheet" href="paper-slider.css">
+    <link rel="stylesheet" href="../polymer-flex-layout/polymer-flex-layout.css">
+
+    <div id="sliderContainer" touch-action="pan-y">
+      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-tap="{{barTap}}"></paper-progress>
+      
+      <div id="sliderKnob" class="ring flexbox justify-center align-center" 
+          on-pointerdown="{{expandKnob}}" on-tap="{{resetKnob}}" 
+          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
+          
+        <div id="sliderKnobInner"></div>
+        
+      </div>
+    </div>
+
+  </template>
+  
+  <script>
+
+    Polymer('paper-slider', {
+
+      value: 0,
+      
+      min: 0,
+      
+      max: 100,
+      
+      step: 1,
+      
+      attached: function() {
+        this._w = this.$.sliderBar.offsetWidth;
+      },
+      
+      valueChanged: function() {
+        this.positionKnob(
+            (this.value - this.min) / (this.max - this.min) * this._w);
+      },
+      
+      calcStep: function(value) {
+        return (Math.round(value / this.step) * this.step);
+      },
+      
+      calcKnobPosition: function() {
+        return (this.max - this.min) * this._x / this._w + this.min;
+      },
+      
+      expandKnob: function() {
+        this.$.sliderKnob.classList.add('expand');
+      },
+      
+      resetKnob: function() {
+        this.$.sliderKnob.classList.remove('expand');
+      },
+      
+      positionKnob: function(x) {
+        this._x = x;
+        var s =  this.$.sliderKnob.style;
+        s.webkitTransform = s.transform = 'translate3d(' + x + 'px, 0, 0)';
+        this._value = this.calcStep(this.calcKnobPosition());
+        this.$.sliderKnob.classList.toggle('ring', this._x <= 0);
+      },
+      
+      trackStart: function(e) {
+        this._startx = this._x || 0;
+        this.$.sliderKnob.classList.add('dragging');
+        e.preventTap();
+      },
+
+      track: function(e) {
+        this.positionKnob(Math.min(this._w, Math.max(0, this._startx + e.dx)));
+      },
+      
+      trackEnd: function() {
+        this.$.sliderKnob.classList.remove('dragging');
+        this.resetKnob();
+        this.value = this.calcStep(this.calcKnobPosition());
+      },
+      
+      barTap: function(e) {
+        var rect = this.$.sliderBar.getBoundingClientRect();
+        this.positionKnob(e.x - rect.left);
+        this.value = this.calcStep(this.calcKnobPosition());
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

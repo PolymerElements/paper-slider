@@ -1,0 +1,73 @@
+/*
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+*/
+
+:host {
+  display: inline-block;
+  width: 200px;
+}
+
+#sliderContainer {
+  position: relative;
+  height: 32px;
+}
+
+#sliderBar {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  height: 2px;
+  width: calc(100% - 32px);
+  padding: 8px 0;
+  margin: -8px 0;
+  cursor: pointer;
+}
+
+#sliderBar /shadow/ #activeProgress {
+	background-color: #3f51b5;
+}
+
+#sliderKnob {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	/* -webkit-transition: -webkit-transform 0.08s ease;
+	transition: transform 0.08s ease; */
+}
+
+#sliderKnob.dragging {
+  /* -webkit-transition: none;
+  transition: none; */
+}
+
+#sliderKnobInner {
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-radius: 50%;
+  background-color: #3f51b5;
+  /* transition-property: height, width, background-color, border;
+  transition-duration: 0.1s;
+  transition-timing-function: ease; */
+  transition: height 0.18s ease, width 0.18s ease, background-color 0.18s ease, border 0.18s ease;
+}
+
+#sliderKnob.expand > #sliderKnobInner {
+	width: 100%;
+	height: 100%;
+}
+
+#sliderKnob.ring > #sliderKnobInner {
+	background-color: #fff;
+	border: 2px solid #c8c8c8;
+}
+
+#sliderKnob.dragging > #sliderKnobInner {
+  /* transition: none; */
+}

@@ -1,0 +1,7 @@
+{
+  "name": "paper-slider",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}
