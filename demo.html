@@ -25,6 +25,7 @@
       
       paper-slider {
         padding: 40px;
+        width: 400px;
       }
       
       paper-slider.yellow /shadow/ #sliderKnobInner {
@@ -35,6 +36,14 @@
         background-color: #f4b400;
       }
       
+      paper-slider.green /shadow/ #sliderKnobInner {
+        background-color: #0f9d58;
+      }
+      
+      paper-slider.green /shadow/ #sliderBar /shadow/ #activeProgress {
+        background-color: #0f9d58;
+      }
+      
     </style>
     
   </head>
@@ -43,9 +52,13 @@
   
     <paper-slider></paper-slider><br>
     
-    <paper-slider value="50"></paper-slider><br>
+    <paper-slider class="yellow" min="100" max="200" value="150"></paper-slider><br>
     
-    <paper-slider class="yellow" min="100" max="200" value="120"></paper-slider>
+    <paper-slider class="green" snaps min="4" max="18" step="2" value="16"></paper-slider><br>
+    
+    <paper-slider snaps pin min="0" max="10" step="1" value="5"></paper-slider><br>
+    
+    <paper-slider pin value="25"></paper-slider>
     
   </body>
 </html>

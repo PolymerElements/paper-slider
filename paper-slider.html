@@ -30,7 +30,7 @@ license that can be found in the LICENSE file.
 
 <link rel="import" href="../paper-progress/paper-progress.html">
 
-<polymer-element name="paper-slider" attributes="value min max step">
+<polymer-element name="paper-slider" attributes="value min max step snaps pin">
 
   <template>
   
@@ -38,15 +38,23 @@ license that can be found in the LICENSE file.
     <link rel="stylesheet" href="../polymer-flex-layout/polymer-flex-layout.css">
 
     <div id="sliderContainer" touch-action="pan-y">
+    
       <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-tap="{{barTap}}"></paper-progress>
       
-      <div id="sliderKnob" class="ring flexbox justify-center align-center" 
+      <div class="slider-markers flexbox {{ {hidden : !snaps} | tokenList }}">
+        <template repeat="{{markers}}">
+          <div class="slider-marker flex"></div>
+        </template>
+      </div>
+      
+      <div id="sliderKnob" class="ring {{ {pin : pin} | tokenList }} flexbox justify-center align-center" 
           on-pointerdown="{{expandKnob}}" on-tap="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
           
-        <div id="sliderKnobInner"></div>
+        <div id="sliderKnobInner" value="{{_value}}"></div>
         
       </div>
+      
     </div>
 
   </template>
@@ -91,13 +99,24 @@ license that can be found in the LICENSE file.
        */
       step: 1,
       
+      /**
+       * If true, the slider thumb snaps to tick marks evenly spaced based
+       * on the `step` property value.
+       *
+       * @attribute snaps
+       * @type boolean
+       * @default false
+       */
+      snaps: false,
+      
+      pin: false,
+      
       attached: function() {
         this._w = this.$.sliderBar.offsetWidth;
       },
       
       valueChanged: function() {
-        this.positionKnob(
-            (this.value - this.min) / (this.max - this.min) * this._w);
+        this.positionKnob(this.getPositionFromValue(this.value));
       },
       
       calcStep: function(value) {
@@ -106,6 +125,10 @@ license that can be found in the LICENSE file.
       
       calcKnobPosition: function() {
         return (this.max - this.min) * this._x / this._w + this.min;
+      },
+      
+      getPositionFromValue: function(value) {
+        return (value - this.min) / (this.max - this.min) * this._w
       },
       
       expandKnob: function() {
@@ -119,9 +142,10 @@ license that can be found in the LICENSE file.
       positionKnob: function(x) {
         this._x = x;
         var s =  this.$.sliderKnob.style;
-        s.webkitTransform = s.transform = 'translate(' + x + 'px, 0)';
         this._value = this.calcStep(this.calcKnobPosition());
-        this.$.sliderKnob.classList.toggle('ring', this._x <= 0);
+        s.webkitTransform = s.transform = 'translate(' + (this.snaps ? 
+            this.getPositionFromValue(this._value) : x) + 'px, 0)';
+        this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
       },
       
       trackStart: function(e) {
@@ -144,6 +168,13 @@ license that can be found in the LICENSE file.
         var rect = this.$.sliderBar.getBoundingClientRect();
         this.positionKnob(e.x - rect.left);
         this.value = this.calcStep(this.calcKnobPosition());
+      },
+      
+      snapsChanged: function() {
+        this.markers = [];
+        for (var i = 0; i < (this.max - this.min) / this.step; i++) {
+          this.markers.push('');
+        }
       }
 
     });
