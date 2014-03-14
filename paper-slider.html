@@ -23,6 +23,26 @@ license that can be found in the LICENSE file.
  *
  *     <paper-slider min="10" max="200" value="110"></paper-slider>
  *
+ * Styling progress bar:
+ *
+ * To change the slider progress bar color:
+ *
+ *     paper-slider /shadow/ #sliderBar /shadow/ #activeProgress {
+ *       background-color: #0f9d58;
+ *     }
+ *
+ * To change the slider knob color:
+ *
+ *     paper-slider /shadow/ #sliderKnobInner {
+ *       background-color: #0f9d58;
+ *     }
+ *
+ * To change the slider pin color:
+ *
+ *     paper-slider /shadow/ #sliderKnobInner::before {
+ *       background-color: #0f9d58;
+ *     }
+ *
  * @element paper-slider
  * @homepage github.io
  */
@@ -30,7 +50,7 @@ license that can be found in the LICENSE file.
 
 <link rel="import" href="../paper-progress/paper-progress.html">
 
-<polymer-element name="paper-slider" attributes="value min max step snaps pin">
+<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled">
 
   <template>
   
@@ -120,6 +140,16 @@ license that can be found in the LICENSE file.
        */
       pin: false,
       
+      /**
+       * If true, this slider is disabled.  A disabled slider cannot be tapped
+       * or dragged to change the slider value.
+       *
+       * @attribute disabled
+       * @type boolean
+       * @default false
+       */
+      disabled: false,
+      
       attached: function() {
         this._w = this.$.sliderBar.offsetWidth;
       },
@@ -180,8 +210,8 @@ license that can be found in the LICENSE file.
       },
       
       snapsChanged: function() {
-        this.markers = [];
-        for (var i = 0; i < (this.max - this.min) / this.step; i++) {
+        this.markers = [], l = (this.max - this.min) / this.step;
+        for (var i = 0; i < l; i++) {
           this.markers.push('');
         }
       }

@@ -73,6 +73,7 @@ license that can be found in the LICENSE file.
   -moz-box-sizing: border-box;
   border-radius: 50%;
   background-color: #3f51b5;
+  /* FIXME(ffu): can't use the following. https://github.com/Polymer/platform/issues/53 */
   /* transition-property: height, width, background-color, border;
   transition-duration: 0.1s;
   transition-timing-function: ease; */
@@ -93,18 +94,24 @@ license that can be found in the LICENSE file.
   /* transition: none; */
 }
 
+#sliderKnobInner::before {
+  background-color: #3f51b5;
+}
+
 #sliderKnob.pin > #sliderKnobInner::before {
-  content: ' ';
+  content: "";
   position: absolute;
-  top: 0px;
+  top: 0;
   left: 0;
   width: 26px;
   height: 26px;
   margin-left: 3px;
   border-radius: 50% 50% 50% 0;
-  background-color: #3f51b5;
-  -webkit-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+  -webkit-transform: rotate(-45deg) scale(0) translate(0);
+  transform: rotate(-45deg) scale(0) translate(0);
+}
+
+#sliderKnobInner::before, #sliderKnobInner::after {
   -webkit-transition: -webkit-transform .2s ease-out, top .2s ease-out, background-color .18s ease;
   transition: transform .2s ease-out, top .2s ease-out, background-color .18s ease;
 }
@@ -114,19 +121,45 @@ license that can be found in the LICENSE file.
 }
 
 #sliderKnob.pin.expand > #sliderKnobInner::before {
-  top: -26px;
-  -webkit-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
+  -webkit-transform: rotate(-45deg) scale(1) translate(17px, -17px);
+  transform: rotate(-45deg) scale(1) translate(17px, -17px);
 }
 
-#sliderKnob.expand.pin > #sliderKnobInner::after {
-  content: attr(value) " ";
+#sliderKnob.pin > #sliderKnobInner::after {
+  /* FIXME(ffu): add dummy quotes to workaround https://github.com/Polymer/platform/issues/57 */
+  content: attr(value) "";
   position: absolute;
-  top: -20px;
+  top: 0;
   left: 0;
   width: 32px;
   height: 26px;
   text-align: center;
   color: #fff;
   font-size: 10px;
+  -webkit-transform: scale(0) translate(0);
+  transform: scale(0) translate(0);
+}
+
+#sliderKnob.pin.expand > #sliderKnobInner::after {
+  -webkit-transform: scale(1) translate(0, -17px);
+  transform: scale(1) translate(0, -17px);
+}
+
+/* disabled state */
+:host([disabled]) #sliderContainer {
+  pointer-events: none;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+:host([disabled]) #sliderKnobInner {
+  width: 8px;
+  height: 8px;
+  background-color: #c8c8c8;
+}
+
+:host([disabled]) #sliderBar /shadow/ #activeProgress {
+  background-color: #c8c8c8;
 }
