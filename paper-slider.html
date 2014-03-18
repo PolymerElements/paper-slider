@@ -59,7 +59,7 @@ license that can be found in the LICENSE file.
 
     <div id="sliderContainer" touch-action="pan-y">
     
-      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-tap="{{barTap}}"></paper-progress>
+      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"></paper-progress>
       
       <div core-flow class="slider-markers {{ {hidden : !snaps} | tokenList }}">
         <template repeat="{{markers}}">
@@ -204,7 +204,7 @@ license that can be found in the LICENSE file.
         this.value = this.calcStep(this.calcKnobPosition());
       },
       
-      barTap: function(e) {
+      barPointerDown: function(e) {
         var rect = this.$.sliderBar.getBoundingClientRect();
         this.positionKnob(e.x - rect.left);
         this.value = this.calcStep(this.calcKnobPosition());
