@@ -55,19 +55,20 @@ license that can be found in the LICENSE file.
   <template>
   
     <link rel="stylesheet" href="paper-slider.css">
-    <link rel="stylesheet" href="../polymer-flex-layout/polymer-flex-layout.css">
+    <link rel="stylesheet" href="../core-layout/core-layout.css">
 
     <div id="sliderContainer" touch-action="pan-y">
     
       <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-tap="{{barTap}}"></paper-progress>
       
-      <div class="slider-markers flexbox {{ {hidden : !snaps} | tokenList }}">
+      <div core-flow class="slider-markers {{ {hidden : !snaps} | tokenList }}">
         <template repeat="{{markers}}">
-          <div class="slider-marker flex"></div>
+          <div core-flex class="slider-marker"></div>
         </template>
       </div>
       
-      <div id="sliderKnob" class="ring {{ {pin : pin, snaps : snaps} | tokenList }} flexbox justify-center align-center" 
+      <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
+          class="ring {{ {pin : pin, snaps : snaps} | tokenList }}" 
           on-pointerdown="{{expandKnob}}" on-tap="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
           
