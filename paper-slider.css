@@ -22,7 +22,6 @@ license that can be found in the LICENSE file.
   width: calc(100% - 32px);
   padding: 8px 0;
   margin: -8px 0;
-  cursor: pointer;
 }
 
 .slider-markers {
@@ -32,7 +31,6 @@ license that can be found in the LICENSE file.
   height: 2px;
   width: calc(100% - 30px);
   box-sizing: border-box;
-  border-right: 2px solid #000;
   pointer-events: none;
   /* background-image: -webkit-linear-gradient(0deg, #ccc, #ccc 1px, transparent 1px, transparent);
   background-size: 10%; */
@@ -42,8 +40,13 @@ license that can be found in the LICENSE file.
   display: none !important;
 }
 
-.slider-marker {
-  border-left: 2px solid #000;
+.slider-markers::after, .slider-marker::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: black;
 }
 
 #sliderBar /shadow/ #activeProgress {
@@ -56,7 +59,6 @@ license that can be found in the LICENSE file.
   top: 0;
   width: 32px;
   height: 32px;
-  cursor: pointer;
   /* -webkit-transition: -webkit-transform 0.08s ease;
   transition: transform 0.08s ease; */
 }
@@ -112,8 +114,8 @@ license that can be found in the LICENSE file.
 }
 
 #sliderKnobInner::before, #sliderKnobInner::after {
-  -webkit-transition: -webkit-transform .2s ease-out, top .2s ease-out, background-color .18s ease;
-  transition: transform .2s ease-out, top .2s ease-out, background-color .18s ease;
+  -webkit-transition: -webkit-transform .2s ease, background-color .18s ease;
+  transition: transform .2s ease, background-color .18s ease;
 }
 
 #sliderKnob.pin.ring > #sliderKnobInner::before {
