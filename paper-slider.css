@@ -59,13 +59,11 @@ license that can be found in the LICENSE file.
   top: 0;
   width: 32px;
   height: 32px;
-  /* -webkit-transition: -webkit-transform 0.08s ease;
-  transition: transform 0.08s ease; */
 }
 
-#sliderKnob.dragging {
-  /* -webkit-transition: none;
-  transition: none; */
+#sliderKnob.snaps.dragging {
+  -webkit-transition: -webkit-transform 0.08s ease;
+  transition: transform 0.08s ease;
 }
 
 #sliderKnobInner {

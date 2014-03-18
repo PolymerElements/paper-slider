@@ -67,7 +67,7 @@ license that can be found in the LICENSE file.
         </template>
       </div>
       
-      <div id="sliderKnob" class="ring {{ {pin : pin} | tokenList }} flexbox justify-center align-center" 
+      <div id="sliderKnob" class="ring {{ {pin : pin, snaps : snaps} | tokenList }} flexbox justify-center align-center" 
           on-pointerdown="{{expandKnob}}" on-tap="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
           
