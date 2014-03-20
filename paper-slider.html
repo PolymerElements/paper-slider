@@ -23,7 +23,7 @@ license that can be found in the LICENSE file.
  *
  *     <paper-slider min="10" max="200" value="110"></paper-slider>
  *
- * Styling progress bar:
+ * Styling slider:
  *
  * To change the slider progress bar color:
  *
@@ -59,17 +59,20 @@ license that can be found in the LICENSE file.
 
     <div id="sliderContainer" touch-action="pan-y">
     
-      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"></paper-progress>
+      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"
+          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
       
-      <div core-flow class="slider-markers {{ {hidden : !snaps} | tokenList }}">
-        <template repeat="{{markers}}">
-          <div core-flex class="slider-marker"></div>
-        </template>
-      </div>
+      <template if="{{snaps && !disabled}}">
+        <div core-flow class="slider-markers">
+          <template repeat="{{markers}}">
+            <div core-flex class="slider-marker"></div>
+          </template>
+        </div>
+      </template>
       
       <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
           class="ring {{ {pin : pin, snaps : snaps} | tokenList }}" 
-          on-pointerdown="{{expandKnob}}" on-tap="{{resetKnob}}" 
+          on-pointerdown="{{expandKnob}}" on-pointerup="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
           
         <div id="sliderKnobInner" value="{{_value}}"></div>
@@ -151,12 +154,21 @@ license that can be found in the LICENSE file.
        */
       disabled: false,
       
+      observe: {
+        value: 'update',
+        min: 'update',
+        max: 'update',
+        step: 'update',
+        snaps: 'update'
+      },
+      
       attached: function() {
         this._w = this.$.sliderBar.offsetWidth;
       },
       
-      valueChanged: function() {
+      update: function() {
         this.positionKnob(this.getPositionFromValue(this.value));
+        this.updateMarkers();
       },
       
       calcStep: function(value) {
@@ -208,9 +220,10 @@ license that can be found in the LICENSE file.
         var rect = this.$.sliderBar.getBoundingClientRect();
         this.positionKnob(e.x - rect.left);
         this.value = this.calcStep(this.calcKnobPosition());
+        this.expandKnob();
       },
       
-      snapsChanged: function() {
+      updateMarkers: function() {
         this.markers = [], l = (this.max - this.min) / this.step;
         for (var i = 0; i < l; i++) {
           this.markers.push('');

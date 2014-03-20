@@ -36,10 +36,6 @@ license that can be found in the LICENSE file.
   background-size: 10%; */
 }
 
-.slider-markers.hidden {
-  display: none !important;
-}
-
 .slider-markers::after, .slider-marker::after {
   content: "";
   display: block;
@@ -154,12 +150,13 @@ license that can be found in the LICENSE file.
   pointer-events: none;
 }
 
-:host([disabled]) #sliderKnobInner {
-  width: 8px;
-  height: 8px;
+:host([disabled]) #sliderKnob > #sliderKnobInner {
+  width: 12px;
+  height: 12px;
   background-color: #c8c8c8;
+  border: 2px solid #fff;
 }
 
-:host([disabled]) #sliderBar /shadow/ #activeProgress {
+:host([disabled]) #sliderContainer > #sliderBar /shadow/ #activeProgress {
   background-color: #c8c8c8;
 }
