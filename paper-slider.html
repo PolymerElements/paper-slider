@@ -46,6 +46,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  *       background-color: #0f9d58;
  *     }
  *
+ * To change the slider buffer progress bar color:
+ *
+ *     paper-slider /shadow/ #sliderBar /shadow/ #bufferProgress {
+ *       background-color: #0f9d58;
+ *     }
+ *
  * @element paper-slider
  * @homepage github.io
  */
@@ -53,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../paper-progress/paper-progress.html">
 
-<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled">
+<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled buffer">
 
   <template>
   
@@ -62,7 +68,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div id="sliderContainer" touch-action="pan-y">
     
-      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"
+      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" buffer="{{buffer}}"
+          on-pointerdown="{{barPointerDown}}" on-pointerup="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
       
       <template if="{{snaps && !disabled}}">
@@ -74,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
       
       <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
-          class="ring {{ {pin : pin, snaps : snaps} | tokenList }}" 
+          class="{{ {pin : pin, snaps : snaps} | tokenList }}" 
           on-pointerdown="{{expandKnob}}" on-pointerup="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
           role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0">
@@ -158,12 +165,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       disabled: false,
       
+      /**
+       * The number that represents the current buffer progress.
+       *
+       * @attribute buffer
+       * @type number
+       * @default 0
+       */
+      buffer: 0,
+      
       observe: {
         'value min max step snaps': 'update'
       },
       
       eventDelegates: {
         keydown: 'keydown'
+      },
+      
+      ready: function() {
+        this.update();
       },
       
       attached: function() {
@@ -197,13 +217,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       resetKnob: function() {
+        this.expandJob && this.expandJob.stop();
         this.$.sliderKnob.classList.remove('expand');
       },
       
       positionKnob: function(x) {
         this._x = x;
         var s =  this.$.sliderKnob.style;
-        this._value = this.calcStep(this.calcKnobPosition());
+        this._value = this.calcStep(this.calcKnobPosition()) || 0;
         s.webkitTransform = s.transform = 'translate(' + (this.snaps ? 
             this.getPositionFromValue(this._value) : x) + 'px, 0)';
         this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
@@ -229,7 +250,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var rect = this.$.sliderBar.getBoundingClientRect();
         this.positionKnob(e.x - rect.left);
         this.value = this.calcStep(this.calcKnobPosition());
-        this.expandKnob();
+        this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
       },
       
       updateMarkers: function() {

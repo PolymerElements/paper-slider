@@ -55,14 +55,20 @@ license that can be found in the LICENSE file.
   top: 0;
   width: 32px;
   height: 32px;
+  transition: -webkit-transform 0.08s ease;
+  transition: transform 0.08s ease;
 }
 
 #sliderKnob:focus {
   outline: none;
 }
 
+#sliderKnob.dragging {
+  transition: none;
+}
+
 #sliderKnob.snaps.dragging {
-  -webkit-transition: -webkit-transform 0.08s ease;
+  transition: -webkit-transform 0.08s ease;
   transition: transform 0.08s ease;
 }
 
@@ -88,10 +94,6 @@ license that can be found in the LICENSE file.
 #sliderKnob.ring > #sliderKnobInner {
   background-color: #fff;
   border: 2px solid #c8c8c8;
-}
-
-#sliderKnob.dragging > #sliderKnobInner {
-  /* transition: none; */
 }
 
 #sliderKnobInner::before {
