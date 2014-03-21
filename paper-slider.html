@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../paper-progress/paper-progress.html">
 
-<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled" tabindex="0">
+<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled">
 
   <template>
   
@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div id="sliderContainer" touch-action="pan-y">
     
-      <paper-progress id="sliderBar" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"
+      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" on-pointerdown="{{barPointerDown}}"
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
       
       <template if="{{snaps && !disabled}}">
@@ -76,7 +76,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
           class="ring {{ {pin : pin, snaps : snaps} | tokenList }}" 
           on-pointerdown="{{expandKnob}}" on-pointerup="{{resetKnob}}" 
-          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
+          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
+          role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0">
           
         <div id="sliderKnobInner" value="{{_value}}"></div>
         
