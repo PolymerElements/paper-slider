@@ -46,9 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  *       background-color: #0f9d58;
  *     }
  *
- * To change the slider buffer progress bar color:
+ * To change the slider secondary progress bar color:
  *
- *     paper-slider /shadow/ #sliderBar /shadow/ #bufferProgress {
+ *     paper-slider /shadow/ #sliderBar /shadow/ #secondaryProgress {
  *       background-color: #0f9d58;
  *     }
  *
@@ -59,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../paper-progress/paper-progress.html">
 
-<polymer-element name="paper-slider" attributes="value min max step snaps pin disabled buffer">
+<polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress">
 
   <template>
   
@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div id="sliderContainer" touch-action="pan-y">
     
-      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" buffer="{{buffer}}"
+      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
           on-pointerdown="{{barPointerDown}}" on-pointerup="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
       
@@ -97,42 +97,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
 
     Polymer('paper-slider', {
-
-      /**
-       * The number that represents the current slider value.
-       *
-       * @attribute value
-       * @type number
-       * @default 0
-       */
-      value: 0,
-      
-      /**
-       * The number that indicates the minimum value of the range.
-       *
-       * @attribute min
-       * @type number
-       * @default 0
-       */
-      min: 0,
-      
-      /**
-       * The number that indicates the maximum value of the range.
-       *
-       * @attribute max
-       * @type number
-       * @default 100
-       */
-      max: 100,
-      
-      /**
-       * Specifies the value granularity of the slider's value.
-       *
-       * @attribute step
-       * @type number
-       * @default 1
-       */
-      step: 1,
       
       /**
        * If true, the slider thumb snaps to tick marks evenly spaced based
@@ -166,13 +130,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       disabled: false,
       
       /**
-       * The number that represents the current buffer progress.
+       * The number that represents the current secondary progress.
        *
-       * @attribute buffer
+       * @attribute secondaryProgress
        * @type number
        * @default 0
        */
-      buffer: 0,
+      secondaryProgress: 0,
       
       observe: {
         'value min max step snaps': 'update'
@@ -191,17 +155,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       update: function() {
-        this.value = this.clampValue(this.value);
+        this.validateValue();
         this.positionKnob(this.getPositionFromValue(this.value));
         this.updateMarkers();
-      },
-      
-      clampValue: function(value) {
-        return Math.min(this.max, Math.max(this.min, value));
-      },
-      
-      calcStep: function(value) {
-        return (Math.round(value / this.step) * this.step);
       },
       
       calcKnobPosition: function() {
@@ -209,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       getPositionFromValue: function(value) {
-        return (value - this.min) / (this.max - this.min) * this._w
+        return this.calcRatio(value) * this._w;
       },
       
       expandKnob: function() {
