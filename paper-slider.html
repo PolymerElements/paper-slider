@@ -58,15 +58,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../paper-progress/paper-progress.html">
+<link rel="import" href="../paper-input/paper-input.html">
 
-<polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress">
+<polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress editable">
 
   <template>
   
     <link rel="stylesheet" href="paper-slider.css">
     <link rel="stylesheet" href="../core-layout/core-layout.css">
 
-    <div id="sliderContainer" touch-action="pan-y">
+    <div id="sliderContainer" touch-action="pan-y" on-keydown="{{keydown}}">
     
       <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
           on-pointerdown="{{barPointerDown}}" on-pointerup="{{resetKnob}}" 
@@ -91,6 +92,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       
     </div>
+    
+    <!-- FIXME(ffu): 
+    1. should paper-input provides some default validation regex, e.g. number?
+    2. paper-input's value is updated immediately when text field content changes.
+       In this case, I actually want something like "finalValue" property
+       such that it gets updated only after the input loses the focus.
+    3. on-change on paper-input doesn't seem to work.
+    -->
+    <paper-input id="sliderInput" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}" hidden?="{{!editable}}" on-blur="{{inputChange}}"></paper-input>
 
   </template>
   
@@ -138,12 +148,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       secondaryProgress: 0,
       
+      /**
+       * If true, an input is shown and user can use it to set the slider value.
+       *
+       * @attribute editable
+       * @type boolean
+       * @default false
+       */
+      editable: false,
+      
       observe: {
         'value min max step snaps': 'update'
-      },
-      
-      eventDelegates: {
-        keydown: 'keydown'
       },
       
       ready: function() {
@@ -155,7 +170,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       update: function() {
-        this.validateValue();
+        if (this.validateValue()) {
+          this.$.sliderInput.value = this.oldValue;
+        }
         this.positionKnob(this.getPositionFromValue(this.value));
         this.updateMarkers();
       },
@@ -183,7 +200,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._value = this.calcStep(this.calcKnobPosition()) || 0;
         s.webkitTransform = s.transform = 'translate(' + (this.snaps ? 
             this.getPositionFromValue(this._value) : x) + 'px, 0)';
+      },
+      
+      _valueChanged: function() {
         this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
+        this.$.sliderInput.value = this._value;
       },
       
       trackStart: function(e) {
@@ -234,6 +255,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if (c === 39) {
           this.increment();
         }
+      },
+      
+      inputChange: function() {
+        this.value = this.$.sliderInput.value;
       }
 
     });
