@@ -100,7 +100,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        such that it gets updated only after the input loses the focus.
     3. on-change on paper-input doesn't seem to work.
     -->
-    <paper-input id="sliderInput" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}" hidden?="{{!editable}}" on-blur="{{inputChange}}"></paper-input>
+    <template if="{{editable}}">
+      <paper-input class="slider-input" value="{{inputValue}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}" on-blur="{{inputChange}}"></paper-input>
+    </template>
 
   </template>
   
@@ -171,7 +173,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       update: function() {
         if (this.validateValue()) {
-          this.$.sliderInput.value = this.oldValue;
+          this.inputValue = this.oldValue;
         }
         this.positionKnob(this.getPositionFromValue(this.value));
         this.updateMarkers();
@@ -204,7 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       _valueChanged: function() {
         this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
-        this.$.sliderInput.value = this._value;
+        this.inputValue = this._value;
       },
       
       trackStart: function(e) {
@@ -258,7 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       inputChange: function() {
-        this.value = this.$.sliderInput.value;
+        this.value = this.inputValue;
       }
 
     });
