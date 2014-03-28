@@ -50,7 +50,7 @@ license that can be found in the LICENSE file.
   background-color: black;
 }
 
-#sliderBar /shadow/ #activeProgress {
+#sliderBar::shadow #activeProgress {
   background-color: #3f51b5;
 }
 
@@ -160,13 +160,13 @@ license that can be found in the LICENSE file.
 
 /* FIXME(ffu): style paper-input's internals to make input looks right.  We
 should see if paper-input can be improved so we can eliminate the followings. */
-.slider-input /shadow/ #underlineContainer {
+.slider-input::shadow #underlineContainer {
   /* without this the underlineContainer would have top: -1px and make it
   on top of the input; possibly a bug? */
   top: 30px !important;
 }
 
-.slider-input /shadow/ input {
+.slider-input::shadow input {
   /* should one be able set text-align directly on paper-input? */
   text-align: center;
 }
@@ -187,6 +187,6 @@ should see if paper-input can be improved so we can eliminate the followings. */
   border: 2px solid #fff;
 }
 
-:host([disabled]) #sliderContainer > #sliderBar /shadow/ #activeProgress {
+:host([disabled]) #sliderContainer > #sliderBar::shadow #activeProgress {
   background-color: #c8c8c8;
 }
