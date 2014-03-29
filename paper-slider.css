@@ -158,16 +158,8 @@ license that can be found in the LICENSE file.
   float: left;
 }
 
-/* FIXME(ffu): style paper-input's internals to make input looks right.  We
-should see if paper-input can be improved so we can eliminate the followings. */
-.slider-input::shadow #underlineContainer {
-  /* without this the underlineContainer would have top: -1px and make it
-  on top of the input; possibly a bug? */
-  top: 30px !important;
-}
-
 .slider-input::shadow input {
-  /* should one be able set text-align directly on paper-input? */
+  /* FIXME(ffu): should one be able set text-align directly on paper-input? */
   text-align: center;
 }
 

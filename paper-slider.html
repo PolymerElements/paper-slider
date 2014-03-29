@@ -93,15 +93,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     </div>
     
-    <!-- FIXME(ffu): 
-    1. should paper-input provides some default validation regex, e.g. number?
-    2. paper-input's value is updated immediately when text field content changes.
-       In this case, I actually want something like "finalValue" property
-       such that it gets updated only after the input loses the focus.
-    3. on-change on paper-input doesn't seem to work.
-    -->
     <template if="{{editable}}">
-      <paper-input class="slider-input" value="{{inputValue}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}" on-blur="{{inputChange}}"></paper-input>
+      <paper-input class="slider-input" value="{{inputValue}}" committedValue="{{value}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}"></paper-input>
     </template>
 
   </template>
@@ -257,10 +250,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if (c === 39) {
           this.increment();
         }
-      },
-      
-      inputChange: function() {
-        this.value = this.inputValue;
       }
 
     });
