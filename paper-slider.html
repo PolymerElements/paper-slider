@@ -70,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="sliderContainer" touch-action="pan-y" on-keydown="{{keydown}}">
     
       <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
-          on-pointerdown="{{barPointerDown}}" on-pointerup="{{resetKnob}}" 
+          on-down="{{bardown}}" on-up="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
       
       <template if="{{snaps && !disabled}}">
@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
           class="{{ {pin : pin, snaps : snaps} | tokenList }}" 
-          on-pointerdown="{{expandKnob}}" on-pointerup="{{resetKnob}}" 
+          on-down="{{expandKnob}}" on-up="{{resetKnob}}" 
           on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
           role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0">
           
@@ -218,7 +218,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.value = this.calcStep(this.calcKnobPosition());
       },
       
-      barPointerDown: function(e) {
+      bardown: function(e) {
         var rect = this.$.sliderBar.getBoundingClientRect();
         this.positionKnob(e.x - rect.left);
         this.value = this.calcStep(this.calcKnobPosition());
