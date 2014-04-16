@@ -73,15 +73,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
     
     <template if="{{snaps && !disabled}}">
-      <div core-flow class="slider-markers">
+      <div class="slider-markers core-h">
         <template repeat="{{markers}}">
           <div core-flex class="slider-marker"></div>
         </template>
       </div>
     </template>
     
-    <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
-        class="{{ {pin : pin, snaps : snaps} | tokenList }}" 
+    <div id="sliderKnob" class="{{ {pin : pin, snaps : snaps} | tokenList }} core-h core-align-center core-justify-center" 
         on-down="{{expandKnob}}" on-up="{{resetKnob}}" 
         on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
         on-transitionend="{{knobTransitionEnd}}" on-webkittransitionend="{{knobTransitionEnd}}"
