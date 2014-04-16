@@ -61,199 +61,210 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-input/paper-input.html">
 
 <polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress editable">
+<template>
 
-  <template>
+  <link rel="stylesheet" href="paper-slider.css">
+  <link rel="stylesheet" href="../core-layout/core-layout.css">
+
+  <div id="sliderContainer" touch-action="pan-y" on-keydown="{{keydown}}">
   
-    <link rel="stylesheet" href="paper-slider.css">
-    <link rel="stylesheet" href="../core-layout/core-layout.css">
-
-    <div id="sliderContainer" touch-action="pan-y" on-keydown="{{keydown}}">
+    <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
+        on-down="{{bardown}}" on-up="{{resetKnob}}" 
+        on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
     
-      <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
-          on-down="{{bardown}}" on-up="{{resetKnob}}" 
-          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
-      
-      <template if="{{snaps && !disabled}}">
-        <div core-flow class="slider-markers">
-          <template repeat="{{markers}}">
-            <div core-flex class="slider-marker"></div>
-          </template>
-        </div>
-      </template>
-      
-      <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
-          class="{{ {pin : pin, snaps : snaps} | tokenList }}" 
-          on-down="{{expandKnob}}" on-up="{{resetKnob}}" 
-          on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
-          role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0">
-          
-        <div id="sliderKnobInner" value="{{_value}}"></div>
-        
+    <template if="{{snaps && !disabled}}">
+      <div core-flow class="slider-markers">
+        <template repeat="{{markers}}">
+          <div core-flex class="slider-marker"></div>
+        </template>
       </div>
+    </template>
+    
+    <div id="sliderKnob" core-flow core-align="center" core-justify="center" 
+        class="{{ {pin : pin, snaps : snaps} | tokenList }}" 
+        on-down="{{expandKnob}}" on-up="{{resetKnob}}" 
+        on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"
+        on-transitionend="{{knobTransitionEnd}}" on-webkittransitionend="{{knobTransitionEnd}}"
+        role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0">
+        
+      <div id="sliderKnobInner" value="{{_value}}"></div>
       
     </div>
     
-    <template if="{{editable}}">
-      <paper-input class="slider-input" value="{{inputValue}}" committedValue="{{value}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}"></paper-input>
-    </template>
-
-  </template>
+  </div>
   
-  <script>
+  <template if="{{editable}}">
+    <paper-input class="slider-input" value="{{value}}" inputValue="{{inputValue}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}"></paper-input>
+  </template>
 
-    Polymer('paper-slider', {
-      
-      /**
-       * If true, the slider thumb snaps to tick marks evenly spaced based
-       * on the `step` property value.
-       *
-       * @attribute snaps
-       * @type boolean
-       * @default false
-       */
-      snaps: false,
-      
-      /**
-       * If true, a pin with numeric value label is shown when the slider thumb 
-       * is pressed.  Use for settings for which users need to know the exact 
-       * value of the setting.
-       *
-       * @attribute pin
-       * @type boolean
-       * @default false
-       */
-      pin: false,
-      
-      /**
-       * If true, this slider is disabled.  A disabled slider cannot be tapped
-       * or dragged to change the slider value.
-       *
-       * @attribute disabled
-       * @type boolean
-       * @default false
-       */
-      disabled: false,
-      
-      /**
-       * The number that represents the current secondary progress.
-       *
-       * @attribute secondaryProgress
-       * @type number
-       * @default 0
-       */
-      secondaryProgress: 0,
-      
-      /**
-       * If true, an input is shown and user can use it to set the slider value.
-       *
-       * @attribute editable
-       * @type boolean
-       * @default false
-       */
-      editable: false,
-      
-      observe: {
-        'value min max step snaps': 'update'
-      },
-      
-      ready: function() {
-        this.update();
-      },
-      
-      attached: function() {
-        this._w = this.$.sliderBar.offsetWidth;
-      },
-      
-      update: function() {
-        if (this.validateValue()) {
-          this.inputValue = this.oldValue;
-        }
-        this.positionKnob(this.getPositionFromValue(this.value));
-        this.updateMarkers();
-      },
-      
-      calcKnobPosition: function() {
-        return (this.max - this.min) * this._x / this._w + this.min;
-      },
-      
-      getPositionFromValue: function(value) {
-        return this.calcRatio(value) * this._w;
-      },
-      
-      expandKnob: function() {
-        this.$.sliderKnob.classList.add('expand');
-      },
-      
-      resetKnob: function() {
-        this.expandJob && this.expandJob.stop();
-        this.$.sliderKnob.classList.remove('expand');
-      },
-      
-      positionKnob: function(x) {
-        this._x = x;
-        var s =  this.$.sliderKnob.style;
-        this._value = this.calcStep(this.calcKnobPosition()) || 0;
-        s.webkitTransform = s.transform = 'translate(' + (this.snaps ? 
-            this.getPositionFromValue(this._value) : x) + 'px, 0)';
-      },
-      
-      _valueChanged: function() {
-        this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
-        this.inputValue = this._value;
-      },
-      
-      trackStart: function(e) {
-        this._startx = this._x || 0;
-        this.$.sliderKnob.classList.add('dragging');
-        e.preventTap();
-      },
+</template>
+<script>
 
-      track: function(e) {
-        this.positionKnob(Math.min(this._w, Math.max(0, this._startx + e.dx)));
-      },
-      
-      trackEnd: function() {
-        this.$.sliderKnob.classList.remove('dragging');
-        this.resetKnob();
-        this.value = this.calcStep(this.calcKnobPosition());
-      },
-      
-      bardown: function(e) {
-        var rect = this.$.sliderBar.getBoundingClientRect();
-        this.positionKnob(e.x - rect.left);
-        this.value = this.calcStep(this.calcKnobPosition());
-        this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
-      },
-      
-      updateMarkers: function() {
-        this.markers = [], l = (this.max - this.min) / this.step;
-        for (var i = 0; i < l; i++) {
-          this.markers.push('');
-        }
-      },
-      
-      increment: function() {
-        this.value = this.clampValue(this.value + this.step);
-      },
-      
-      decrement: function() {
-        this.value = this.clampValue(this.value - this.step);
-      },
-      
-      keydown: function(e) {
-        if (this.disabled) {
-          return;
-        }
-        var c = e.keyCode;
-        if (c === 37) {
-          this.decrement();
-        } else if (c === 39) {
-          this.increment();
-        }
+  Polymer('paper-slider', {
+    
+    /**
+     * If true, the slider thumb snaps to tick marks evenly spaced based
+     * on the `step` property value.
+     *
+     * @attribute snaps
+     * @type boolean
+     * @default false
+     */
+    snaps: false,
+    
+    /**
+     * If true, a pin with numeric value label is shown when the slider thumb 
+     * is pressed.  Use for settings for which users need to know the exact 
+     * value of the setting.
+     *
+     * @attribute pin
+     * @type boolean
+     * @default false
+     */
+    pin: false,
+    
+    /**
+     * If true, this slider is disabled.  A disabled slider cannot be tapped
+     * or dragged to change the slider value.
+     *
+     * @attribute disabled
+     * @type boolean
+     * @default false
+     */
+    disabled: false,
+    
+    /**
+     * The number that represents the current secondary progress.
+     *
+     * @attribute secondaryProgress
+     * @type number
+     * @default 0
+     */
+    secondaryProgress: 0,
+    
+    /**
+     * If true, an input is shown and user can use it to set the slider value.
+     *
+     * @attribute editable
+     * @type boolean
+     * @default false
+     */
+    editable: false,
+    
+    observe: {
+      'value min max step snaps': 'update'
+    },
+    
+    ready: function() {
+      this.update();
+    },
+    
+    update: function() {
+      if (this.validateValue()) {
+        this.inputValue = this.oldValue;
       }
+      this.positionKnob(this.calcRatio(this.value));
+      this.updateMarkers();
+    },
+    
+    expandKnob: function() {
+      this.$.sliderKnob.classList.add('expand');
+    },
+    
+    resetKnob: function() {
+      this.expandJob && this.expandJob.stop();
+      this.$.sliderKnob.classList.remove('expand');
+    },
+    
+    positionKnob: function(ratio) {
+      this._ratio = ratio;
+      this._value = this.calcStep(this.calcKnobPosition()) || 0;
+      this.$.sliderKnob.style.left = 
+        (this.snaps ? this.calcRatio(this._value) : this._ratio) * 100 + '%';
+    },
+    
+    _valueChanged: function() {
+      this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
+      this.inputValue = this._value;
+    },
+    
+    calcKnobPosition: function() {
+      return (this.max - this.min) * this._ratio + this.min;
+    },
+    
+    measureWidth: function() {
+      this._w = this.$.sliderBar.offsetWidth;
+    },
+    
+    trackStart: function(e) {
+      this.measureWidth();
+      this._x = this._ratio * this._w;
+      this._startx = this._x || 0;
+      this._minx = - this._startx;
+      this._maxx = this._w - this._startx;
+      this.$.sliderKnob.classList.add('dragging');
+      e.preventTap();
+    },
 
-    });
+    track: function(e) {
+      var x = Math.min(this._maxx, Math.max(this._minx, e.dx));
+      this._x = this._startx + x;
+      this._ratio = this._x / this._w;
+      this._value = this.calcStep(this.calcKnobPosition()) || 0;
+      var s =  this.$.sliderKnob.style;
+      s.transform = s.webkitTransform = 'translate3d(' + (this.snaps ? 
+          (this.calcRatio(this._value) * this._w) - this._startx : x) + 'px, 0, 0)';
+    },
+    
+    trackEnd: function() {
+      var s =  this.$.sliderKnob.style;
+      s.transform = s.webkitTransform = null;
+      this.$.sliderKnob.classList.remove('dragging');
+      this.resetKnob();
+      this.value = this._value;
+    },
+    
+    bardown: function(e) {
+      this.measureWidth();
+      this.$.sliderKnob.classList.add('transiting');
+      var rect = this.$.sliderBar.getBoundingClientRect();
+      this.positionKnob((e.x - rect.left) / this._w);
+      this.value = this.calcStep(this.calcKnobPosition());
+      this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
+    },
+    
+    knobTransitionEnd: function() {
+      this.$.sliderKnob.classList.remove('transiting');
+    },
+    
+    updateMarkers: function() {
+      this.markers = [], l = (this.max - this.min) / this.step;
+      for (var i = 0; i < l; i++) {
+        this.markers.push('');
+      }
+    },
+    
+    increment: function() {
+      this.value = this.clampValue(this.value + this.step);
+    },
+    
+    decrement: function() {
+      this.value = this.clampValue(this.value - this.step);
+    },
+    
+    keydown: function(e) {
+      if (this.disabled) {
+        return;
+      }
+      var c = e.keyCode;
+      if (c === 37) {
+        this.decrement();
+      } else if (c === 39) {
+        this.increment();
+      }
+    }
 
-  </script>
+  });
 
+</script>
 </polymer-element>
