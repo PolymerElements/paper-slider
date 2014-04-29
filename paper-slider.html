@@ -90,7 +90,7 @@ To change the slider secondary progress bar color:
   </div>
   
   <template if="{{editable}}">
-    <paper-input id="input" class="slider-input" value="{{_value}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled="{{disabled}}" on-change="{{inputChange}}"></paper-input>
+    <paper-input id="input" class="slider-input" value="{{_value}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled?="{{disabled}}" on-change="{{inputChange}}"></paper-input>
   </template>
 
 </template>
