@@ -1,75 +1,127 @@
 <!doctype html>
 <html>
-  <head>
-    <title>paper-slider</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <script src="../platform/platform.js"></script>
-    
-    <link rel="import" href="paper-slider.html">
-    
-    <style shim-shadowdom>
-    
-      body {
-        font-family: Roboto2, 'Helvetica Neue', Helvetica, Arial;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-touch-callout: none;
-      }
-      
-      paper-slider {
-        width: 400px;
-      }
-      
-      paper-slider.yellow::shadow #sliderKnobInner,
-      paper-slider.yellow::shadow #sliderBar::shadow #activeProgress {
-        background-color: #f4b400;
-      }
-      
-      paper-slider.green::shadow #sliderKnobInner,
-      paper-slider.green::shadow #sliderKnobInner::before,
-      paper-slider.green::shadow #sliderBar::shadow #activeProgress {
-        background-color: #0f9d58;
-      }
-      
-    </style>
-    
-  </head>
+<head>
+  <title>paper-slider</title>
   
-  <body unresolved>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   
-    <br><br><br>
+  <script src="../platform/platform.js"></script>
   
-    <paper-slider></paper-slider>
+  <link rel="import" href="paper-slider.html">
+  <link rel="import" href="../font-roboto2/roboto2.html">
+  <link rel="import" href="../core-layout/core-layout.html">
+  
+  <style shim-shadowdom>
+  
+    body {
+      font-family: Roboto2, 'Helvetica Neue', Helvetica, Arial;
+      padding: 20px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-touch-callout: none;
+    }
     
-    <br><br><br>
+    paper-slider {
+      width: 100%;
+    }
     
-    <paper-slider value="50" disabled></paper-slider>
+    section {
+      max-width: 460px;
+      padding: 20px;
+      margin: 0 auto;
+      background-color: #f0f0f0;
+    }
     
-    <br><br><br>
+    section > div {
+      padding: 14px;
+    }
     
-    <paper-slider class="yellow" min="100" max="200" value="150"></paper-slider>
+    .yellow-slider paper-slider::shadow #sliderKnobInner,
+    .yellow-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
+      background-color: #f4b400;
+    }
     
-    <br><br><br>
+    .green-slider paper-slider::shadow #sliderKnobInner,
+    .green-slider paper-slider::shadow #sliderKnobInner::before,
+    .green-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
+      background-color: #0f9d58;
+    }
     
-    <paper-slider class="green" snaps min="4" max="18" step="2" value="8"></paper-slider>
+  </style>
+  
+</head>
+<body unresolved>
+
+  <section class="yellow-slider">
+  
+    <div>Music, video, games & other media</div>
+    <paper-slider value="50"></paper-slider>
     
-    <br><br><br>
+    <br>
+    <br>
     
-    <paper-slider snaps pin min="0" max="10" step="1" value="5"></paper-slider>
+    <div>Notifications</div>
+    <paper-slider value="50"></paper-slider>
     
-    <br><br><br>
+    <br>
+    <br>
     
-    <paper-slider class="green" pin value="25"></paper-slider>
+    <div>Alarms</div>
+    <paper-slider value="80"></paper-slider>
     
-    <br><br><br>
+  </section>
+  
+  <br>
+  
+  <section>
+  
+    <core-layout class="core-align-center">
+      <div>R</div>
+      <paper-slider value="23" max="255" editable></paper-slider>
+    </core-layout>
     
-    <paper-slider value="50" editable></paper-slider>
+    <br>
+    <br>
     
-  </body>
+    <core-layout class="core-align-center">
+      <div>G</div>
+      <paper-slider value="183" max="255" editable></paper-slider>
+    </core-layout>
+    
+    <br>
+    <br>
+    
+    <core-layout class="core-align-center">
+      <div>B</div>
+      <paper-slider value="211" max="255" editable></paper-slider>
+    </core-layout>
+    
+  </section>
+  
+  <br>
+  
+  <section class="green-slider">
+  
+    <div>Brightness</div>
+    <br>
+    <paper-slider pin value="50"></paper-slider>
+  
+  </section>
+  
+  <br>
+  
+  <section class="green-slider">
+  
+    <div>Ratings</div>
+    <br>
+    <paper-slider pin snaps max="10" step="1" value="5"></paper-slider>
+  
+  </section>
+  
+</body>
 </html>

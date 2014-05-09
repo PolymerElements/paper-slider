@@ -3,7 +3,8 @@
   "private": true,
   "dependencies": {
     "core-layout": "Polymer/core-layout#master",
-    "paper-progress": "Polymer/paper-progress#master",
-    "paper-input": "Polymer/paper-input#master"
+    "font-roboto2": "Polymer/font-roboto2#master",
+    "paper-input": "Polymer/paper-input#master",
+    "paper-progress": "Polymer/paper-progress#master"
   }
 }
