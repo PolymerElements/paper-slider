@@ -52,6 +52,11 @@
       background-color: #0f9d58;
     }
     
+    #ratingsLabel {
+      padding-left: 12px;
+      color: #a0a0a0;
+    }
+    
   </style>
   
 </head>
@@ -59,7 +64,7 @@
 
   <section class="yellow-slider">
   
-    <div>Music, video, games & other media</div>
+    <div>Music, video, games &amp; other media</div>
     <paper-slider value="50"></paper-slider>
     
     <br>
@@ -117,11 +122,21 @@
   
   <section class="green-slider">
   
-    <div>Ratings</div>
+    <div>
+      <span>Ratings</span><span id="ratingsLabel"></span>
+    </div>
     <br>
-    <paper-slider pin snaps max="10" step="1" value="5"></paper-slider>
+    <paper-slider pin snaps max="10" step="1" value="5" onchange="updateRatings(event);"></paper-slider>
   
   </section>
+  
+  <script>
+  
+    function updateRatings(e) {
+      document.querySelector('#ratingsLabel').textContent = e.target.value;
+    }
+  
+  </script>
   
 </body>
 </html>
