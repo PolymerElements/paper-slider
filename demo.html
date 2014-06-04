@@ -124,15 +124,16 @@
       <span>Ratings</span><span id="ratingsLabel"></span>
     </div>
     <br>
-    <paper-slider pin snaps max="10" step="1" value="5" onchange="updateRatings(event);"></paper-slider>
+    <paper-slider id="ratings" pin snaps max="10" step="1" value="5"></paper-slider>
   
   </section>
   
   <script>
   
-    function updateRatings(e) {
-      document.querySelector('#ratingsLabel').textContent = e.target.value;
-    }
+    var ratings = document.querySelector('#ratings');
+    ratings.addEventListener('change', function() {
+      document.querySelector('#ratingsLabel').textContent = ratings.value;
+    });
   
   </script>
   
