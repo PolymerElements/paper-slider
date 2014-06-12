@@ -58,14 +58,14 @@ To change the slider secondary progress bar color:
 <link rel="import" href="../paper-progress/paper-progress.html">
 <link rel="import" href="../paper-input/paper-input.html">
 
-<polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress editable">
+<polymer-element name="paper-slider" extends="core-range" attributes="snaps pin disabled secondaryProgress editable immediateValue">
 <template>
 
   <link rel="stylesheet" href="paper-slider.css">
 
   <div id="sliderContainer" touch-action="pan-y" on-keydown="{{keydown}}">
   
-    <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{_value}}" secondaryProgress="{{secondaryProgress}}"
+    <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{immediateValue}}" secondaryProgress="{{secondaryProgress}}"
         on-down="{{bardown}}" on-up="{{resetKnob}}" 
         on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}"></paper-progress>
     
@@ -84,14 +84,14 @@ To change the slider secondary progress bar color:
         role="slider" aria-valuenow="{{value}}" aria-valuemin="{{min}}" aria-valuemax="{{max}}" tabindex="0"
         center-justified center horizontal layout>
         
-      <div id="sliderKnobInner" value="{{_value}}"></div>
+      <div id="sliderKnobInner" value="{{immediateValue}}"></div>
       
     </div>
     
   </div>
   
   <template if="{{editable}}">
-    <paper-input id="input" class="slider-input" value="{{_value}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled?="{{disabled}}" on-change="{{inputChange}}"></paper-input>
+    <paper-input id="input" class="slider-input" value="{{immediateValue}}" validate="^[-+]?[0-9]*\.?[0-9]+$" disabled?="{{disabled}}" on-change="{{inputChange}}"></paper-input>
   </template>
 
 </template>
@@ -154,6 +154,15 @@ To change the slider secondary progress bar color:
      */
     editable: false,
     
+    /**
+     * The immediate value of the slider.  This value is updated while the user
+     * is dragging the slider.
+     *
+     * @attribute immediateValue
+     * @type number
+     * @default 0
+     */
+    
     observe: {
       'min max step snaps': 'update'
     },
@@ -183,13 +192,13 @@ To change the slider secondary progress bar color:
     
     positionKnob: function(ratio) {
       this._ratio = ratio;
-      this._value = this.calcStep(this.calcKnobPosition()) || 0;
+      this.immediateValue = this.calcStep(this.calcKnobPosition()) || 0;
       this.$.sliderKnob.style.left = 
-        (this.snaps ? this.calcRatio(this._value) : this._ratio) * 100 + '%';
+        (this.snaps ? this.calcRatio(this.immediateValue) : this._ratio) * 100 + '%';
     },
     
-    _valueChanged: function() {
-      this.$.sliderKnob.classList.toggle('ring', this._value <= this.min);
+    immediateValueChanged: function() {
+      this.$.sliderKnob.classList.toggle('ring', this.immediateValue <= this.min);
     },
     
     inputChange: function() {
@@ -218,10 +227,10 @@ To change the slider secondary progress bar color:
       var x = Math.min(this._maxx, Math.max(this._minx, e.dx));
       this._x = this._startx + x;
       this._ratio = this._x / this._w;
-      this._value = this.calcStep(this.calcKnobPosition()) || 0;
+      this.immediateValue = this.calcStep(this.calcKnobPosition()) || 0;
       var s =  this.$.sliderKnob.style;
       s.transform = s.webkitTransform = 'translate3d(' + (this.snaps ? 
-          (this.calcRatio(this._value) * this._w) - this._startx : x) + 'px, 0, 0)';
+          (this.calcRatio(this.immediateValue) * this._w) - this._startx : x) + 'px, 0, 0)';
     },
     
     trackEnd: function() {
@@ -229,7 +238,7 @@ To change the slider secondary progress bar color:
       s.transform = s.webkitTransform = null;
       this.$.sliderKnob.classList.remove('dragging');
       this.resetKnob();
-      this.value = this._value;
+      this.value = this.immediateValue;
     },
     
     bardown: function(e) {
