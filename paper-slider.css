@@ -95,6 +95,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   transition-duration: 0.1s;
   transition-timing-function: ease; */
   transition: height 0.18s ease, width 0.18s ease, background-color 0.28s ease, border 0.18s ease;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 #sliderKnob.expand:not(.pin) > #sliderKnobInner {
