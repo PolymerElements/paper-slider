@@ -199,8 +199,10 @@ To change the slider secondary progress bar color:
     positionKnob: function(ratio) {
       this._ratio = ratio;
       this.immediateValue = this.calcStep(this.calcKnobPosition()) || 0;
-      this.$.sliderKnob.style.left = 
-        (this.snaps ? this.calcRatio(this.immediateValue) : this._ratio) * 100 + '%';
+      if (this.snaps) {
+        this._ratio = this.calcRatio(this.immediateValue);
+      }
+      this.$.sliderKnob.style.left = this._ratio * 100 + '%';
     },
     
     immediateValueChanged: function() {
