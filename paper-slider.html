@@ -110,6 +110,15 @@ To change the slider secondary progress bar color:
      *
      * @event change
      */
+
+    /**
+     * Fired when the slider's value changes due to manual interaction.
+     *
+     * Changes to the slider's value due to changes in an underlying
+     * bound variable will not trigger this event.
+     *
+     * @event manual-change
+     */
      
     /**
      * If true, the slider thumb snaps to tick marks evenly spaced based
@@ -211,6 +220,7 @@ To change the slider secondary progress bar color:
     
     inputChange: function() {
       this.value = this.$.input.value;
+      this.fire('manual-change');
     },
     
     calcKnobPosition: function() {
@@ -247,6 +257,7 @@ To change the slider secondary progress bar color:
       this.$.sliderKnob.classList.remove('dragging');
       this.resetKnob();
       this.value = this.immediateValue;
+      this.fire('manual-change');
     },
     
     bardown: function(e) {
@@ -256,6 +267,7 @@ To change the slider secondary progress bar color:
       this.positionKnob((e.x - rect.left) / this._w);
       this.value = this.calcStep(this.calcKnobPosition());
       this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
+      this.fire('manual-change');
     },
     
     knobTransitionEnd: function() {
@@ -271,10 +283,12 @@ To change the slider secondary progress bar color:
     
     increment: function() {
       this.value = this.clampValue(this.value + this.step);
+      this.fire('manual-change');
     },
     
     decrement: function() {
       this.value = this.clampValue(this.value - this.step);
+      this.fire('manual-change');
     },
     
     keydown: function(e) {
