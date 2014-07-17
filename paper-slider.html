@@ -283,12 +283,10 @@ To change the slider secondary progress bar color:
     
     increment: function() {
       this.value = this.clampValue(this.value + this.step);
-      this.fire('manual-change');
     },
     
     decrement: function() {
       this.value = this.clampValue(this.value - this.step);
-      this.fire('manual-change');
     },
     
     keydown: function(e) {
@@ -301,6 +299,7 @@ To change the slider secondary progress bar color:
       } else if (c === 39) {
         this.increment();
       }
+      this.fire('manual-change');
     }
 
   });
