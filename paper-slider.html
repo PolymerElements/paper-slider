@@ -296,10 +296,11 @@ To change the slider secondary progress bar color:
       var c = e.keyCode;
       if (c === 37) {
         this.decrement();
+        this.fire('manual-change');
       } else if (c === 39) {
         this.increment();
+        this.fire('manual-change');
       }
-      this.fire('manual-change');
     }
 
   });
