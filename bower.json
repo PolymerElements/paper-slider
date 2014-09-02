@@ -4,6 +4,7 @@
   "dependencies": {
     "font-roboto": "Polymer/font-roboto#master",
     "paper-input": "Polymer/paper-input#master",
-    "paper-progress": "Polymer/paper-progress#master"
+    "paper-progress": "Polymer/paper-progress#master",
+    "core-a11y-keys": "Polymer/core-a11y-keys#master"
   }
 }
