@@ -73,7 +73,7 @@ To change the slider secondary progress bar color:
   <core-a11y-keys target="{{disabled ? null : $.sliderKnob}}" keys="left down pagedown home" on-keys-pressed="{{decrementKey}}"></core-a11y-keys>
   <core-a11y-keys target="{{disabled ? null : $.sliderKnob}}" keys="right up pageup end" on-keys-pressed="{{incrementKey}}"></core-a11y-keys>
 
-  <div id="sliderContainer" class="{{ {disabled: disabled, pin: pin, snaps: snaps, ring: immediateValue <= min, expand: expand, dragging: dragging, editable: editable} | tokenList }}">
+  <div id="sliderContainer" class="{{ {disabled: disabled, pin: pin, snaps: snaps, ring: immediateValue <= min, expand: expand, dragging: dragging, transiting: transiting, editable: editable} | tokenList }}">
 
     <div class="bar-container">
       <paper-progress id="sliderBar" aria-hidden="true" min="{{min}}" max="{{max}}" value="{{immediateValue}}" secondaryProgress="{{secondaryProgress}}"
@@ -202,6 +202,12 @@ To change the slider secondary progress bar color:
       this.fire('core-change');
     },
 
+    immediateValueChanged: function() {
+      if (!this.dragging) {
+        this.value = this.immediateValue;
+      }
+    },
+
     expandKnob: function() {
       this.expand = true;
     },
@@ -226,12 +232,8 @@ To change the slider secondary progress bar color:
       return (this.max - this.min) * ratio + this.min;
     },
 
-    measureWidth: function() {
-      this._w = this.$.sliderBar.offsetWidth;
-    },
-
     trackStart: function(e) {
-      this.measureWidth();
+      this._w = this.$.sliderBar.offsetWidth;
       this._x = this._ratio * this._w;
       this._startx = this._x || 0;
       this._minx = - this._startx;
@@ -262,18 +264,19 @@ To change the slider secondary progress bar color:
     },
 
     bardown: function(e) {
-      this.measureWidth();
-      this.$.sliderKnob.classList.add('transiting');
+      this.transiting = true;
+      this._w = this.$.sliderBar.offsetWidth;
       var rect = this.$.sliderBar.getBoundingClientRect();
       var ratio = (e.x - rect.left) / this._w;
       this.positionKnob(ratio);
-      this.value = this.calcStep(this.calcKnobPosition(ratio));
       this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
       this.fire('change');
     },
 
-    knobTransitionEnd: function() {
-      this.$.sliderKnob.classList.remove('transiting');
+    knobTransitionEnd: function(e) {
+      if (e.target === this.$.sliderKnob) {
+        this.transiting = false;
+      }
     },
 
     updateMarkers: function() {
