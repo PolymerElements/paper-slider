@@ -13,6 +13,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   cursor: default;
 }
 
+:host(:focus) {
+  outline: none;
+}
+
 #sliderContainer {
   position: relative;
   width: calc(100% - 32px);
