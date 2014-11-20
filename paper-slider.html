@@ -307,7 +307,8 @@ To change the slider secondary progress bar color:
     },
 
     updateMarkers: function() {
-      this.markers = [], l = (this.max - this.min) / this.step;
+      this.markers = [];
+      var l = (this.max - this.min) / this.step;
       if (!this.snaps && l > this.maxMarkers) {
         return;
       }
