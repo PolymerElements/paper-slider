@@ -189,9 +189,17 @@ To change the slider secondary progress bar color:
      * @type number
      * @default 0
      */
-
     maxMarkers: 100,
-     
+
+    /**
+     * True when the user is dragging the slider.
+     *
+     * @attribute dragging
+     * @type boolean
+     * @default false
+     */
+    dragging: false,
+
     observe: {
       'step snaps': 'update'
     },
