@@ -334,7 +334,7 @@ To change the slider secondary progress bar color:
 
     /**
      * Increases value by `step` but not above `max`.
-     * @method
+     * @method increment
      */
     increment: function() {
       this.value = this.clampValue(this.value + this.step);
@@ -342,7 +342,7 @@ To change the slider secondary progress bar color:
 
     /**
      * Decreases value by `step` but not below `min`.
-     * @method
+     * @method decrement
      */
     decrement: function() {
       this.value = this.clampValue(this.value - this.step);
