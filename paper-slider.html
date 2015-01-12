@@ -312,7 +312,7 @@ To change the slider secondary progress bar color:
       var ratio = (e.x - rect.left) / this._w;
       this.positionKnob(ratio);
       this.expandJob = this.job(this.expandJob, this.expandKnob, 60);
-      this.fire('change');
+      this.asyncFire('change');
     },
 
     knobTransitionEnd: function(e) {
