@@ -10,136 +10,136 @@
 <!doctype html>
 <html>
 <head>
-  <title>paper-slider</title>
-  
+  <title>paper-slider demo</title>
+
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  
-  <script src="../webcomponentsjs/webcomponents.js"></script>
-  
-  <link rel="import" href="paper-slider.html">
-  <link rel="import" href="../font-roboto/roboto.html">
-  
-  <style shim-shadowdom>
-  
+
+  <script src="../../webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="../../iron-flex-layout/classes/iron-flex-layout.html">
+  <link rel="stylesheet" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../paper-slider.html">
+
+  <style is="custom-style">
+
     body {
       font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
       margin: 0;
       padding: 24px;
     }
-    
+
     paper-slider {
       width: 100%;
     }
-    
+
     section {
       max-width: 1000px;
       padding: 20px 0;
       background-color: #f0f0f0;
     }
-    
+
     section > div {
       padding: 14px;
     }
-    
-    .yellow-slider paper-slider::shadow #sliderKnobInner,
-    .yellow-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
-      background-color: #f4b400;
+
+    .yellow-slider paper-slider {
+      --paper-slider-knob-color: #f4b400;
+      --paper-slider-active-color: #f4b400;
     }
-    
-    .green-slider paper-slider::shadow #sliderKnobInner,
-    .green-slider paper-slider::shadow #sliderKnobInner::before,
-    .green-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
-      background-color: #0f9d58;
+
+    .green-slider paper-slider {
+      --paper-slider-knob-color: #0f9d58;
+      --paper-slider-pin-color: #0f9d58;
+      --paper-slider-active-color: #0f9d58;
     }
-    
+
     #ratingsLabel {
       padding-left: 12px;
       color: #a0a0a0;
     }
-    
+
   </style>
-  
+
 </head>
-<body unresolved>
+<body>
 
   <section class="yellow-slider">
-  
+
     <div>Music, video, games &amp; other media</div>
     <paper-slider value="50"></paper-slider>
-    
+
     <br>
     <br>
-    
+
     <div>Notifications</div>
     <paper-slider value="50"></paper-slider>
-    
+
     <br>
     <br>
-    
+
     <div>Alarms</div>
     <paper-slider value="80"></paper-slider>
-    
+
   </section>
-  
+
   <br>
-  
+
   <section>
-  
-    <div center horizontal layout>
+
+    <div class="center horizontal layout">
       <div>R</div>
       <paper-slider value="23" max="255" editable></paper-slider>
     </div>
-    
+
     <br>
     <br>
-    
-    <div center horizontal layout>
+
+    <div class="center horizontal layout">
       <div>G</div>
       <paper-slider value="183" max="255" editable></paper-slider>
     </div>
-    
+
     <br>
     <br>
-    
-    <div center horizontal layout>
+
+    <div class="center horizontal layout">
       <div>B</div>
       <paper-slider value="211" max="255" editable></paper-slider>
     </div>
-    
+
   </section>
-  
+
   <br>
-  
+
   <section class="green-slider">
-  
+
     <div>Brightness</div>
     <br>
     <paper-slider pin value="50"></paper-slider>
-  
+
   </section>
-  
+
   <br>
-  
+
   <section class="green-slider">
-  
+
     <div>
       <span>Ratings</span><span id="ratingsLabel"></span>
     </div>
     <br>
     <paper-slider id="ratings" pin snaps max="10" step="1" value="5"></paper-slider>
-  
+
   </section>
-  
+
   <script>
-  
+
     var ratings = document.querySelector('#ratings');
-    ratings.addEventListener('core-change', function() {
+    ratings.addEventListener('value-change', function() {
       document.querySelector('#ratingsLabel').textContent = ratings.value;
     });
-  
+
   </script>
-  
+
 </body>
 </html>
