@@ -17,41 +17,38 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <script src="../../webcomponentsjs/webcomponents.js"></script>
-  <link rel="import" href="../../iron-flex-layout/classes/iron-flex-layout.html">
   <link rel="stylesheet" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../../paper-styles/demo-pages.html">
   <link rel="import" href="../paper-slider.html">
 
   <style is="custom-style">
-
     body {
-      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-      margin: 0;
-      padding: 24px;
+      padding: 40px;
     }
-
+    
     paper-slider {
       width: 100%;
     }
 
-    section {
-      max-width: 1000px;
-      padding: 20px 0;
-      background-color: #f0f0f0;
+    paper-slider.blue {
+      --paper-slider-knob-color: var(--paper-light-blue-500);
+      --paper-slider-active-color: var(--paper-light-blue-500);
     }
 
-    section > div {
-      padding: 14px;
+    paper-slider.red {
+      --paper-slider-knob-color: var(--paper-red-500);
+      --paper-slider-active-color: var(--paper-red-500);
     }
 
-    .yellow-slider paper-slider {
-      --paper-slider-knob-color: #f4b400;
-      --paper-slider-active-color: #f4b400;
+    paper-slider.green {
+      --paper-slider-knob-color: var(--paper-green-500);
+      --paper-slider-active-color: var(--paper-green-500);
     }
 
-    .green-slider paper-slider {
-      --paper-slider-knob-color: #0f9d58;
-      --paper-slider-pin-color: #0f9d58;
-      --paper-slider-active-color: #0f9d58;
+    paper-slider.orange {
+      --paper-slider-knob-color: var(--paper-orange-500);
+      --paper-slider-active-color: var(--paper-orange-500);
+      --paper-slider-pin-color: var(--paper-orange-500);
     }
 
     #ratingsLabel {
@@ -63,74 +60,45 @@
 
 </head>
 <body>
-
-  <section class="yellow-slider">
-
-    <div>Music, video, games &amp; other media</div>
-    <paper-slider value="50"></paper-slider>
-
-    <br>
-    <br>
-
-    <div>Notifications</div>
-    <paper-slider value="50"></paper-slider>
-
-    <br>
-    <br>
-
-    <div>Alarms</div>
-    <paper-slider value="80"></paper-slider>
-
-  </section>
-
-  <br>
-
-  <section>
-
-    <div class="center horizontal layout">
-      <div>R</div>
-      <paper-slider value="23" max="255" editable></paper-slider>
+  <div class="vertical center-justified layout">
+    <h4>Default</h4>
+    <div class="vertical-section">
+      <div>Oxygen</div>
+      <paper-slider value="21"></paper-slider><br><br>
+      <div>Argon</div>
+      <paper-slider value="1"></paper-slider><br><br>
+      <div>Hydrogen</div>
+      <paper-slider value="0"></paper-slider><br><br>
+      <div>Nitrogen</div>
+      <paper-slider value="78"></paper-slider><br><br>
+      <div>Sprinkles</div>
+      <paper-slider disabled value="33"></paper-slider>
     </div>
 
-    <br>
-    <br>
-
-    <div class="center horizontal layout">
-      <div>G</div>
-      <paper-slider value="183" max="255" editable></paper-slider>
+    <h4>Editable</h4>
+    <div class="vertical-section">
+      <div class="center horizontal layout">
+        <div>R</div>
+        <paper-slider class="red" value="23" max="255" editable></paper-slider>
+      </div>
+      <div class="center horizontal layout">
+        <div>G</div>
+        <paper-slider class="green" value="183" max="255" editable></paper-slider>
+      </div>
+      <div class="center horizontal layout">
+        <div>B</div>
+        <paper-slider class="blue" value="211" max="255" editable></paper-slider>
+      </div>
     </div>
 
-    <br>
-    <br>
-
-    <div class="center horizontal layout">
-      <div>B</div>
-      <paper-slider value="211" max="255" editable></paper-slider>
+    <h4>Labelled pins</h4>
+    <div class="vertical-section">
+      <div>Brightness</div><br>
+      <paper-slider pin value="20" class="orange"></paper-slider>
+      <div>Ratings: <span id="ratingsLabel"></span></div><br>
+      <paper-slider id="ratings" pin snaps max="10" step="1" value="5" class="orange"></paper-slider>
     </div>
-
-  </section>
-
-  <br>
-
-  <section class="green-slider">
-
-    <div>Brightness</div>
-    <br>
-    <paper-slider pin value="50"></paper-slider>
-
-  </section>
-
-  <br>
-
-  <section class="green-slider">
-
-    <div>
-      <span>Ratings</span><span id="ratingsLabel"></span>
-    </div>
-    <br>
-    <paper-slider id="ratings" pin snaps max="10" step="1" value="5"></paper-slider>
-
-  </section>
+  </div>
 
   <script>
 
