@@ -291,7 +291,9 @@ To change the slider disabled secondary progress bar color:
         this.value = this.immediateValue;
       }
       this._updateInputValue();
-      this.fire('immediate-value-change');
+      if (this.dragging) {
+        this.fire('immediate-value-change');
+      }
     },
 
     _secondaryProgressChanged: function() {
