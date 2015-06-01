@@ -1,6 +1,7 @@
 {
   "name": "paper-slider",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "A material design-style slider",
   "license": "http://polymer.github.io/LICENSE.txt",
   "authors": "The Polymer Authors",
   "keywords": [
