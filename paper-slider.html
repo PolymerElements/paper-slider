@@ -329,36 +329,33 @@ To change the slider disabled secondary progress bar color:
       return (this.max - this.min) * ratio + this.min;
     },
 
-    _onTrack: function(e) {
+    _onTrack: function(event) {
       switch (event.detail.state) {
-        case 'end':
-          this._trackEnd(event);
+        case 'start':
+          this._trackStart(event);
           break;
         case 'track':
           this._trackX(event);
           break;
-        case 'start':
-          this._trackStart(event);
+        case 'end':
+          this._trackEnd(event);
           break;
       }
     },
 
-    _trackStart: function(e) {
+    _trackStart: function(event) {
       this._w = this.$.sliderBar.offsetWidth;
       this._x = this.ratio * this._w;
       this._startx = this._x || 0;
       this._minx = - this._startx;
       this._maxx = this._w - this._startx;
       this.$.sliderKnob.classList.add('dragging');
+
       this._setDragging(true);
-      e.preventDefault();
     },
 
-    _trackX: function(e) {
-      if (!this.dragging) {
-        this._trackStart(e);
-      }
-      var x = Math.min(this._maxx, Math.max(this._minx, e.detail.dx));
+    _trackX: function(event) {
+      var x = Math.min(this._maxx, Math.max(this._minx, event.detail.dx));
       this._x = this._startx + x;
       this._setImmediateValue(this._calcStep(
           this._calcKnobPosition(this._x / this._w)) || 0);
@@ -377,27 +374,29 @@ To change the slider disabled secondary progress bar color:
       this.fire('change');
     },
 
-    _knobdown: function(e) {
-      e.preventDefault();
+    _knobdown: function(event) {
+      event.detail.sourceEvent.preventDefault();
       this._expandKnob();
     },
 
-    _bardown: function(e) {
-      e.preventDefault();
+    _bardown: function(event) {
+      event.preventDefault();
       this._setTransiting(true);
       this._w = this.$.sliderBar.offsetWidth;
       var rect = this.$.sliderBar.getBoundingClientRect();
-      var ratio = (e.detail.x - rect.left) / this._w;
+      var ratio = (event.detail.x - rect.left) / this._w;
       this._positionKnob(ratio);
       this._expandJob = this.debounce(this._expandJob, this._expandKnob, 60);
 
       this.async(function() {
         this.fire('change');
       });
+
+      event.detail.sourceEvent.preventDefault();
     },
 
-    _knobTransitionEnd: function(e) {
-      if (e.target === this.$.sliderKnob) {
+    _knobTransitionEnd: function(event) {
+      if (event.target === this.$.sliderKnob) {
         this._setTransiting(false);
       }
     },
