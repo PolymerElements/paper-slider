@@ -250,3 +250,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 .disabled.ring > #sliderKnob > #sliderKnobInner {
   background-color: transparent;
 }
+
+paper-ripple {
+  color: var(--paper-slider-knob-color, --google-blue-700);
+}
