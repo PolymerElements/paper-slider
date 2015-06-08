@@ -310,14 +310,15 @@ To change the slider disabled secondary progress bar color:
     },
 
     _resetKnob: function() {
-      this._expandJob && this._expandJob.stop();
+      this.cancelDebouncer('expandKnob');
       this._setExpand(false);
     },
 
     _positionKnob: function(ratio) {
-      this._setImmediateValue(this._calcStep(this._calcKnobPosition(ratio)) || 0);
-      this._setRatio(this.snaps ? this._calcRatio(this.immediateValue) : ratio);
-      this.$.sliderKnob.style.left = this.ratio * 100 + '%';
+      this._setImmediateValue(this._calcStep(this._calcKnobPosition(ratio)));
+      this._setRatio(this._calcRatio(this.immediateValue));
+
+      this.$.sliderKnob.style.left = (this.ratio * 100) + '%';
     },
 
     _inputChange: function() {
@@ -329,7 +330,7 @@ To change the slider disabled secondary progress bar color:
       return (this.max - this.min) * ratio + this.min;
     },
 
-    _onTrack: function(e) {
+    _onTrack: function(event) {
       switch (event.detail.state) {
         case 'end':
           this._trackEnd(event);
@@ -358,46 +359,65 @@ To change the slider disabled secondary progress bar color:
       if (!this.dragging) {
         this._trackStart(e);
       }
-      var x = Math.min(this._maxx, Math.max(this._minx, e.detail.dx));
-      this._x = this._startx + x;
-      this._setImmediateValue(this._calcStep(
-          this._calcKnobPosition(this._x / this._w)) || 0);
-      var s =  this.$.sliderKnob.style;
-      s.transform = s.webkitTransform = 'translate3d(' + (this.snaps ?
-          (this._calcRatio(this.immediateValue) * this._w) - this._startx : x) + 'px, 0, 0)';
+
+      var dx = Math.min(this._maxx, Math.max(this._minx, e.detail.dx));
+      this._x = this._startx + dx;
+
+      var immediateValue = this._calcStep(this._calcKnobPosition(this._x / this._w));
+      this._setImmediateValue(immediateValue);
+
+      // update knob's position
+      var translateX = ((this._calcRatio(immediateValue) * this._w) - this._startx);
+      this.translate3d(translateX + 'px', 0, 0, this.$.sliderKnob);
     },
 
     _trackEnd: function() {
-      var s =  this.$.sliderKnob.style;
-      s.transform = s.webkitTransform = '';
+      var s = this.$.sliderKnob.style;
+
       this.$.sliderKnob.classList.remove('dragging');
       this._setDragging(false);
       this._resetKnob();
       this.value = this.immediateValue;
+
+      s.transform = s.webkitTransform = '';
+
       this.fire('change');
     },
 
-    _knobdown: function(e) {
-      e.preventDefault();
+    _knobdown: function(event) {
+      event.preventDefault();
       this._expandKnob();
     },
 
-    _bardown: function(e) {
-      e.preventDefault();
-      this._setTransiting(true);
+    _bardown: function(event) {
+      event.preventDefault();
+      console.log(event);
+
       this._w = this.$.sliderBar.offsetWidth;
       var rect = this.$.sliderBar.getBoundingClientRect();
-      var ratio = (e.detail.x - rect.left) / this._w;
+      var ratio = (event.detail.x - rect.left) / this._w;
+      var prevRatio = this.ratio;
+
+      this._setTransiting(true);
       this._positionKnob(ratio);
-      this._expandJob = this.debounce(this._expandJob, this._expandKnob, 60);
+
+      this.debounce('expandKnob', this._expandKnob, 60);
+
+      // if the ratio doesn't change, sliderKnob's animation won't start
+      // and `_knobTransitionEnd` won't be called
+      // Therefore, we need to manually update the `transiting` state
+
+      if (prevRatio === this.ratio) {
+        this._setTransiting(false);
+      }
 
       this.async(function() {
         this.fire('change');
       });
     },
 
-    _knobTransitionEnd: function(e) {
-      if (e.target === this.$.sliderKnob) {
+    _knobTransitionEnd: function(event) {
+      if (event.target === this.$.sliderKnob) {
         this._setTransiting(false);
       }
     },
@@ -414,14 +434,14 @@ To change the slider disabled secondary progress bar color:
     _getClassNames: function() {
       var classes = {};
 
-      classes['disabled'] = this.disabled;
-      classes['pin'] = this.pin;
-      classes['snaps'] = this.snaps;
-      classes['ring'] = this.immediateValue <= this.min;
-      classes['expand'] = this.expand;
-      classes['dragging'] = this.dragging;
-      classes['transiting'] = this.transiting;
-      classes['editable'] = this.editable;
+      classes.disabled = this.disabled;
+      classes.pin = this.pin;
+      classes.snaps = this.snaps;
+      classes.ring = this.immediateValue <= this.min;
+      classes.expand = this.expand;
+      classes.dragging = this.dragging;
+      classes.transiting = this.transiting;
+      classes.editable = this.editable;
 
       return Object.keys(classes).filter(
         function(className) {
