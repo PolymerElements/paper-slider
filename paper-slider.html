@@ -88,7 +88,7 @@ To change the slider disabled secondary progress bar color:
 
     <div id="sliderContainer" class$="[[_getClassNames(disabled, pin, snaps, immediateValue, min, expand, dragging, transiting, editable)]]">
       <div class="bar-container">
-        <paper-progress id="sliderBar" aria-hidden="true" min="[[min]]" max="[[max]]" value="[[immediateValue]]" secondary-progress="[[secondaryProgress]]"
+        <paper-progress id="sliderBar" aria-hidden="true" min="[[min]]" max="[[max]]" step="[[step]]" value="[[immediateValue]]" secondary-progress="[[secondaryProgress]]"
           on-down="_bardown" on-up="_resetKnob" on-track="_onTrack"></paper-progress>
       </div>
 
@@ -110,7 +110,7 @@ To change the slider disabled secondary progress bar color:
     </div>
 
     <template is="dom-if" if="[[editable]]">
-      <paper-input id="input" class="slider-input" disabled$="[[disabled]]" on-change="_inputChange"></paper-input>
+      <paper-input id="input" class="slider-input" disabled$="[[disabled]]" value="[[value]]" on-change="_inputChange"></paper-input>
     </template>
 
   </template>
@@ -247,6 +247,7 @@ To change the slider disabled secondary progress bar color:
 
     ready: function() {
       // issue polymer/polymer#1305
+
       this.async(function() {
         this._updateKnob(this.value);
         this._updateInputValue();
@@ -301,7 +302,7 @@ To change the slider disabled secondary progress bar color:
 
     _updateInputValue: function() {
       if (this.editable) {
-        this.$$('#input').value = this.immediateValue;
+        this.$$('#input').value = this.immediateValue.toString();
       }
     },
 
