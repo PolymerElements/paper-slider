@@ -250,6 +250,7 @@ To change the slider disabled secondary progress bar color:
       },
 
       markers: {
+        type: Array,
         readOnly: true,
         value: []
       },
@@ -368,7 +369,7 @@ To change the slider disabled secondary progress bar color:
           this._trackX(event);
           break;
         case 'end':
-          this._trackEnd(event);
+          this._trackEnd();
           break;
       }
     },
