@@ -89,6 +89,7 @@ To change the slider disabled secondary progress bar color:
   <template>
     <div id="sliderContainer"
       class$="[[_getClassNames(disabled, pin, snaps, immediateValue, min, expand, dragging, transiting, editable)]]">
+
       <div class="bar-container">
         <paper-progress
           id="sliderBar"
@@ -277,6 +278,7 @@ To change the slider disabled secondary progress bar color:
 
     ready: function() {
       // issue polymer/polymer#1305
+
       this.async(function() {
         this._updateKnob(this.value);
         this._updateInputValue();
@@ -331,7 +333,7 @@ To change the slider disabled secondary progress bar color:
 
     _updateInputValue: function() {
       if (this.editable) {
-        this.$$('#input').value = this.immediateValue;
+        this.$$('#input').value = this.immediateValue.toString();
       }
     },
 

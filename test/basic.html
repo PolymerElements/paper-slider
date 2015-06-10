@@ -131,6 +131,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
+      test('editable', function(done) {
+        slider.min = 0;
+        slider.max = 10;
+        slider.step = 1;
+        slider.editable = true;
+
+        flush(function() {
+          slider.value = 2;
+          assert.equal(slider.$$('#input').value, slider.value);
+          done();
+        });
+      });
+
+      test('decimal values', function(done) {
+        slider.min = 0;
+        slider.max = 1;
+        slider.value = slider.min;
+        slider.step = 0.1;
+
+        slider.increment();
+
+        flush(function() {
+          assert.equal(slider.value, slider.step);
+          assert.equal(slider.$.sliderBar.value, slider.step);
+          done();
+        });
+      });
+
     });
 
   </script>
