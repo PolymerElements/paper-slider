@@ -116,7 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 .transiting #sliderBar::shadow #activeProgress {
-  transition: -webkit-transform 0.08s ease;
+  -webkit-transition: -webkit-transform 0.08s ease;
   transition: transform 0.08s ease;
 }
 

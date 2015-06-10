@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
   <link rel="import" href="../paper-slider.html">
   <link rel="import" href="../../test-fixture/test-fixture.html">
@@ -46,11 +47,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('set value', function(done) {
         slider.value = 50;
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.value, 50);
           // test clamp value
           slider.value = 60.1;
-          asyncPlatformFlush(function() {
+          flush(function() {
             assert.equal(slider.value, 60);
             done();
           });
@@ -60,32 +61,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('set max', function(done) {
         slider.max = 10;
         slider.value = 11;
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.value, slider.max);
           done();
         });
       });
 
-      test('test ratio', function(done) {
+      test('ratio', function(done) {
         slider.max = 10;
         slider.value = 5;
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.ratio, 0.5);
           done();
         });
       });
 
-      test('test snaps', function(done) {
+      test('snaps', function(done) {
         slider.snaps = true;
         slider.step = 10;
         slider.max = 100;
         slider.value = 25;
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.value, 30);
 
           slider.value = 51.1;
 
-          asyncPlatformFlush(function() {
+          flush(function() {
             assert.equal(slider.value, 50);
             slider.snaps = false;
             slider.step = 1;
@@ -94,10 +95,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      test('test secondary progress', function(done) {
+      test('secondary progress', function(done) {
         slider.max = 10;
         slider.secondaryProgress = 50;
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.secondaryProgress, slider.max);
           done();
         });
@@ -110,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slider.value = 0;
         slider.increment();
 
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.value, slider.step);
             slider.step = 1;
             done();
@@ -124,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slider.value = 8;
         slider.decrement();
 
-        asyncPlatformFlush(function() {
+        flush(function() {
           assert.equal(slider.value, 6);
             slider.step = 1;
             done();
@@ -156,6 +157,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(slider.value, slider.step);
           assert.equal(slider.$.sliderBar.value, slider.step);
           done();
+        });
+      });
+
+      test('snap to the correct value on tapping', function(done) {
+        var cursor = MockInteractions.topLeftOfNode(slider.$.sliderBar);
+        cursor.x += slider.$.sliderBar.getBoundingClientRect().width * 0.9;
+
+        slider.min = 0;
+        slider.max = 2;
+        slider.step = 1;
+        slider.value = 0;
+
+        MockInteractions.down(slider.$.sliderBar, cursor);
+
+        flush(function() {
+          assert.equal(slider.value, slider.max);
+            slider.step = 1;
+            done();
         });
       });
 
