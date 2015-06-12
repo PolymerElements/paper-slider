@@ -292,7 +292,7 @@ To change the slider disabled secondary progress bar color:
      * @method increment
      */
     increment: function() {
-      this.value = this._clampValue(this.value + this.step);
+      this.value = this._clampValue(this.value + this.step).toString();
     },
 
     /**
@@ -300,7 +300,7 @@ To change the slider disabled secondary progress bar color:
      * @method decrement
      */
     decrement: function() {
-      this.value = this._clampValue(this.value - this.step);
+      this.value = this._clampValue(this.value - this.step).toString();
     },
 
     _updateKnob: function(value) {
@@ -324,7 +324,7 @@ To change the slider disabled secondary progress bar color:
       if (this.dragging) {
         this.fire('immediate-value-change');
       } else {
-        this.value = this.immediateValue;
+        this.value = this.immediateValue.toString();
       }
       this._updateInputValue();
     },
@@ -413,7 +413,7 @@ To change the slider disabled secondary progress bar color:
       this.$.sliderKnob.classList.remove('dragging');
       this._setDragging(false);
       this._resetKnob();
-      this.value = this.immediateValue;
+      this.value = this.immediateValue.toString();
 
       s.transform = s.webkitTransform = '';
 
@@ -497,7 +497,7 @@ To change the slider disabled secondary progress bar color:
 
     _incrementKey: function(event) {
       if (event.detail.key === 'end') {
-        this.value = this.max;
+        this.value = this.max.toString();
       } else {
         this.increment();
       }
@@ -506,7 +506,7 @@ To change the slider disabled secondary progress bar color:
 
     _decrementKey: function(event) {
       if (event.detail.key === 'home') {
-        this.value = this.min;
+        this.value = this.min.toString();
       } else {
         this.decrement();
       }
