@@ -83,6 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   width: 100%;
   padding: 8px 0;
   margin: -8px 0;
+  background-color: var(--paper-slider-bar-color, transparent);
 }
 
 .ring #sliderBar {
