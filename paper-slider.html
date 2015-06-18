@@ -110,26 +110,6 @@ Custom property | Description | Default
 </dom-module>
 
 <script>
-  /**
-   * Fired when the slider's value changes.
-   *
-   * @event value-change
-   */
-
-  /**
-   * Fired when the slider's immediateValue changes.
-   *
-   * @event immediate-value-change
-   */
-
-  /**
-   * Fired when the slider's value changes due to user interaction.
-   *
-   * Changes to the slider's value due to changes in an underlying
-   * bound variable will not trigger this event.
-   *
-   * @event change
-   */
 
   Polymer({
     is: 'paper-slider',
@@ -484,5 +464,27 @@ Custom property | Description | Default
       }
       this.fire('change');
     }
-  })
+  });
+
+  /**
+   * Fired when the slider's value changes.
+   *
+   * @event value-change
+   */
+
+  /**
+   * Fired when the slider's immediateValue changes.
+   *
+   * @event immediate-value-change
+   */
+
+  /**
+   * Fired when the slider's value changes due to user interaction.
+   *
+   * Changes to the slider's value due to changes in an underlying
+   * bound variable will not trigger this event.
+   *
+   * @event change
+   */
+
 </script>
