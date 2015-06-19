@@ -92,7 +92,7 @@ Custom property | Description | Default
         on-up="_resetKnob"
         on-track="_onTrack"
         on-transitionend="_knobTransitionEnd">
-          <paper-ripple id="ink" class="circle" center></paper-ripple>
+          <paper-ripple id="ink" class="circle" center hidden$="[[!receivedFocusFromKeyboard]]"></paper-ripple>
           <div id="sliderKnobInner" value$="[[immediateValue]]"></div>
       </div>
     </div>
@@ -312,14 +312,12 @@ Custom property | Description | Default
     },
 
     _expandKnob: function() {
-      this.$.ink.holdDown = false;
       this._setExpand(true);
     },
 
     _resetKnob: function() {
       this.cancelDebouncer('expandKnob');
       this._setExpand(false);
-      this.$.ink.hidden = true;
     },
 
     _positionKnob: function(ratio) {
@@ -403,10 +401,6 @@ Custom property | Description | Default
     },
 
     _bardown: function(event) {
-      this.$.ink.hidden = true;
-
-      event.preventDefault();
-
       this._w = this.$.sliderBar.offsetWidth;
       var rect = this.$.sliderBar.getBoundingClientRect();
       var ratio = (event.detail.x - rect.left) / this._w;
