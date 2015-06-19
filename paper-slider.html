@@ -264,7 +264,7 @@ Custom property | Description | Default
      * @method increment
      */
     increment: function() {
-      this.value = this._clampValue(this.value + this.step);
+      this.value = this._clampValue(this.value + this.step).toString();
     },
 
     /**
@@ -272,7 +272,7 @@ Custom property | Description | Default
      * @method decrement
      */
     decrement: function() {
-      this.value = this._clampValue(this.value - this.step);
+      this.value = this._clampValue(this.value - this.step).toString();
     },
 
     _updateKnob: function(value) {
@@ -296,7 +296,7 @@ Custom property | Description | Default
       if (this.dragging) {
         this.fire('immediate-value-change');
       } else {
-        this.value = this.immediateValue;
+        this.value = this.immediateValue.toString();
       }
       this._updateInputValue();
     },
@@ -383,7 +383,7 @@ Custom property | Description | Default
       this.$.sliderKnob.classList.remove('dragging');
       this._setDragging(false);
       this._resetKnob();
-      this.value = this.immediateValue;
+      this.value = this.immediateValue.toString();
 
       s.transform = s.webkitTransform = '';
 
@@ -463,7 +463,7 @@ Custom property | Description | Default
 
     _incrementKey: function(event) {
       if (event.detail.key === 'end') {
-        this.value = this.max;
+        this.value = this.max.toString();
       } else {
         this.increment();
       }
@@ -472,7 +472,7 @@ Custom property | Description | Default
 
     _decrementKey: function(event) {
       if (event.detail.key === 'home') {
-        this.value = this.min;
+        this.value = this.min.toString();
       } else {
         this.decrement();
       }
