@@ -19,6 +19,22 @@ Use `min` and `max` to specify the slider range. Default is `0` to `100`. For ex
 
 ### Styling slider
 
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-slider-bar-color` | The background color of the slider | `transparent`
+`--paper-slider-active-color` | The progress bar color | `--google-blue-700`
+`--paper-slider-secondary-color` | The secondary progress bar color | `--google-blue-300`
+`--paper-slider-knob-color` | The knob color | `--google-blue-700`
+`--paper-slider-disabled-knob-color` | The disabled knob color | `--google-grey-500`
+`--paper-slider-pin-color` | The pin color | `--google-blue-700`
+`--paper-slider-font-color` | The pin's text color | `#fff`
+`--paper-slider-disabled-active-color` | The disabled progress bar color | `--google-grey-500`
+`--paper-slider-disabled-secondary-color` | The disabled secondary progress bar color | `--google-grey-300`
+
+Example:
+
 ```
 paper-slider {
   --paper-slider-bar-color: #fff;
