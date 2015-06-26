@@ -318,6 +318,7 @@ Custom property | Description | Default
     },
 
     _onTrack: function(event) {
+      event.stopPropagation();
       switch (event.detail.state) {
         case 'start':
           this._trackStart(event);
