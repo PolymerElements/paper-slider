@@ -376,7 +376,7 @@ Custom property | Description | Default
       this._expandKnob();
 
       // cancel selection
-      event.detail.sourceEvent.preventDefault();
+      event.preventDefault();
 
       // set the focus manually because we will called prevent default
       this.focus();
@@ -407,7 +407,7 @@ Custom property | Description | Default
       });
 
       // cancel selection
-      event.detail.sourceEvent.preventDefault();
+      event.preventDefault();
     },
 
     _knobTransitionEnd: function(event) {
