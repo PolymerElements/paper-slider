@@ -66,6 +66,7 @@ Custom property | Description | Default
 
       <div class="bar-container">
         <paper-progress
+          class$="[[_getProgressClass(transiting)]]"
           id="sliderBar"
           aria-hidden="true"
           min="[[min]]"
@@ -93,7 +94,12 @@ Custom property | Description | Default
         on-up="_resetKnob"
         on-track="_onTrack"
         on-transitionend="_knobTransitionEnd">
-          <paper-ripple id="ink" class="circle" center hidden$="[[!receivedFocusFromKeyboard]]"></paper-ripple>
+          <paper-ripple
+            center
+            id="ink"
+            class="circle"
+            hidden$="[[!receivedFocusFromKeyboard]]">
+          </paper-ripple>
           <div id="sliderKnobInner" value$="[[immediateValue]]"></div>
       </div>
     </div>
@@ -103,7 +109,9 @@ Custom property | Description | Default
         id="input"
         class="slider-input"
         disabled$="[[disabled]]"
-        on-change="_inputChange">
+        on-change="_inputChange"
+        value="[[_fixForInput(immediateValue)]]"
+        >
       </paper-input>
     </template>
   </template>
@@ -116,9 +124,8 @@ Custom property | Description | Default
     is: 'paper-slider',
 
     behaviors: [
-      Polymer.IronA11yKeysBehavior,
-      Polymer.PaperInkyFocusBehavior,
       Polymer.IronFormElementBehavior,
+      Polymer.PaperInkyFocusBehavior,
       Polymer.IronRangeBehavior
     ],
 
@@ -234,9 +241,9 @@ Custom property | Description | Default
 
     ready: function() {
       // issue polymer/polymer#1305
+
       this.async(function() {
         this._updateKnob(this.value);
-        this._updateInputValue();
       }, 1);
     },
 
@@ -279,17 +286,15 @@ Custom property | Description | Default
       } else {
         this.value = this.immediateValue;
       }
-      this._updateInputValue();
     },
 
     _secondaryProgressChanged: function() {
       this.secondaryProgress = this._clampValue(this.secondaryProgress);
     },
 
-    _updateInputValue: function() {
-      if (this.editable) {
-        this.$$('#input').value = this.immediateValue.toString();
-      }
+    _fixForInput: function(immediateValue) {
+      // paper-input/issues/114
+      return this.immediateValue.toString();
     },
 
     _expandKnob: function() {
@@ -425,6 +430,13 @@ Custom property | Description | Default
       }
     },
 
+    _mergeClasses: function(classes) {
+      return Object.keys(classes).filter(
+        function(className) {
+          return classes[className];
+        }).join(' ');
+    },
+
     _getClassNames: function() {
       var classes = {};
 
@@ -437,10 +449,13 @@ Custom property | Description | Default
       classes.transiting = this.transiting;
       classes.editable = this.editable;
 
-      return Object.keys(classes).filter(
-        function(className) {
-          return classes[className];
-        }).join(' ');
+      return this._mergeClasses(classes);
+    },
+
+    _getProgressClass: function() {
+      return this._mergeClasses({
+        transiting: this.transiting
+      });
     },
 
     _incrementKey: function(event) {
