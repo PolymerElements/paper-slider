@@ -168,8 +168,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 .ring > #sliderKnob > #sliderKnobInner {
-  background-color: transparent;
-  border: 2px solid #c8c8c8;
+  background-color: var(--paper-slider-knob-start-color, transparent);
+  border: 2px solid var(--paper-slider-knob-start-border-color, #c8c8c8);
 }
 
 #sliderKnobInner::before {
@@ -197,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 .pin.ring > #sliderKnob > #sliderKnobInner::before {
-  background-color: #c8c8c8;
+  background-color: var(--paper-slider-pin-start-color, #c8c8c8);
 }
 
 .pin.expand > #sliderKnob > #sliderKnobInner::before {
