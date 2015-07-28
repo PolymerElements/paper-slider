@@ -426,7 +426,7 @@ Custom property | Description | Default
 
     _maxMarkersChanged: function(maxMarkers) {
       var l = (this.max - this.min) / this.step;
-      if (!this.snaps && l > maxMarkers) {
+      if (!this.snaps && l && l > maxMarkers) {
         this._setMarkers([]);
       } else {
         this._setMarkers(new Array(l));
