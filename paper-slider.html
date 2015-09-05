@@ -64,7 +64,7 @@ Custom property | Description | Default
   <link rel="import" type="css" href="paper-slider.css">
 
   <template>
-    <div id="sliderContainer"
+    <div id="sliderContainer" role="slider" tabindex="0"
       class$="[[_getClassNames(disabled, pin, snaps, immediateValue, min, expand, dragging, transiting, editable)]]">
 
       <div class="bar-container">
@@ -106,19 +106,20 @@ Custom property | Description | Default
           <div id="sliderKnobInner" value$="[[immediateValue]]"></div>
       </div>
     </div>
-
     <template is="dom-if" if="[[editable]]">
       <paper-input
+        type="number"
+        step="[[step]]"
+        min="[[min]]"
+        max="[[max]]"
         id="input"
         class="slider-input"
         disabled$="[[disabled]]"
-        on-change="_inputChange"
-        value="[[_fixForInput(immediateValue)]]"
-        >
+        value="[[immediateValue]]"
+        on-change="_changeValue">
       </paper-input>
     </template>
   </template>
-
 </dom-module>
 
 <script>
@@ -232,11 +233,6 @@ Custom property | Description | Default
       '_immediateValueChanged(immediateValue)'
     ],
 
-    hostAttributes: {
-      role: 'slider',
-      tabindex: 0
-    },
-
     keyBindings: {
       'left down pagedown home': '_decrementKey',
       'right up pageup end': '_incrementKey'
@@ -244,7 +240,6 @@ Custom property | Description | Default
 
     ready: function() {
       // issue polymer/polymer#1305
-
       this.async(function() {
         this._updateKnob(this.value);
       }, 1);
@@ -271,15 +266,15 @@ Custom property | Description | Default
     },
 
     _minChanged: function() {
-      this.setAttribute('aria-valuemin', this.min);
+      this.$.sliderContainer.setAttribute('aria-valuemin', this.min);
     },
 
     _maxChanged: function() {
-      this.setAttribute('aria-valuemax', this.max);
+      this.$.sliderContainer.setAttribute('aria-valuemax', this.max);
     },
 
     _valueChanged: function() {
-      this.setAttribute('aria-valuenow', this.value);
+      this.$.sliderContainer.setAttribute('aria-valuenow', this.value);
       this.fire('value-change');
     },
 
@@ -293,11 +288,6 @@ Custom property | Description | Default
 
     _secondaryProgressChanged: function() {
       this.secondaryProgress = this._clampValue(this.secondaryProgress);
-    },
-
-    _fixForInput: function(immediateValue) {
-      // paper-input/issues/114
-      return this.immediateValue.toString();
     },
 
     _expandKnob: function() {
@@ -314,11 +304,6 @@ Custom property | Description | Default
       this._setRatio(this._calcRatio(this.immediateValue));
 
       this.$.sliderKnob.style.left = (this.ratio * 100) + '%';
-    },
-
-    _inputChange: function() {
-      this.value = this.$$('#input').value;
-      this.fire('change');
     },
 
     _calcKnobPosition: function(ratio) {
@@ -347,7 +332,6 @@ Custom property | Description | Default
       this._minx = - this._startx;
       this._maxx = this._w - this._startx;
       this.$.sliderKnob.classList.add('dragging');
-
       this._setDragging(true);
     },
 
@@ -476,6 +460,11 @@ Custom property | Description | Default
       } else {
         this.decrement();
       }
+      this.fire('change');
+    },
+
+    _changeValue: function(event) {
+      this.value = event.detail.value;
       this.fire('change');
     }
   });
