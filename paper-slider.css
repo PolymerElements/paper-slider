@@ -34,6 +34,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   height: 32px;
 }
 
+#sliderContainer:focus {
+  outline: 0;
+}
+
 #sliderContainer.editable {
   float: left;
   width: calc(100% - 72px);
@@ -214,14 +218,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   transform: scale(1) translate(0, -17px);
 }
 
-/* editable: paper-input */
+/* paper-input */
 .slider-input {
-  width: 40px;
+  width: 50px;
   float: right;
   overflow: hidden;
-}
-
-.slider-input {
   --paper-input-container-input: {
     text-align: center;
   };
