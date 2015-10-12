@@ -208,6 +208,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         MockInteractions.down(slider.$.sliderBar, cursor);
       });
 
+      test('max markers', function(done) {
+        slider.min = 0;
+        slider.max = 100;
+        slider.snap = true;
+        slider.step = 4;
+        slider.maxMarkers = 10;
+        flush(function() {
+          assert.equal(slider.markers.length, 10);
+          done();
+        });
+      });
+
     });
 
   </script>
