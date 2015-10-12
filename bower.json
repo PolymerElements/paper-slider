@@ -17,6 +17,7 @@
     "type": "git",
     "url": "git://github.com/PolymerElements/paper-slider.git"
   },
+  "ignore": [],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
     "paper-input": "PolymerElements/paper-input#^1.0.0",
