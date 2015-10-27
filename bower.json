@@ -10,9 +10,7 @@
     "slider",
     "control"
   ],
-  "main": [
-    "paper-slider.html"
-  ],
+  "main": "paper-slider.html",
   "repository": {
     "type": "git",
     "url": "git://github.com/PolymerElements/paper-slider.git"
