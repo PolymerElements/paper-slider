@@ -36,7 +36,7 @@ Custom property | Description | Default
 
 Example:
 
-```
+```css
 paper-slider {
   --paper-slider-bar-color: #fff;
   --paper-slider-active-color: #0f9d58;
