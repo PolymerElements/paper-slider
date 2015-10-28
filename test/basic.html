@@ -181,14 +181,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('value should notify', function(done) {
         var targetValue = 10;
 
-        slider.addEventListener('value-changed', function(e) {
-          assert.equal(e.detail.value, targetValue);
-          done();
-        });
-        
+        slider.addEventListener('value-changed', onValueChanged);
+
         slider.min = 0;
         slider.max = 100;
         slider.value = targetValue;
+
+        function onValueChanged(e) {
+          assert.equal(e.detail.value, targetValue);
+          done();
+          slider.removeEventListener('value-changed', onValueChanged);
+        }
       });
 
       test('immediateValue should notify', function(done) {
@@ -199,7 +202,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           assert.equal(slider.immediateValue, targetValue);
           done();
         });
-        
+
         var cursor = MockInteractions.topLeftOfNode(slider.$.sliderBar);
         cursor.x += slider.$.sliderBar.getBoundingClientRect().width * targetValue/100;
 
