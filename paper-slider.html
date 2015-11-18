@@ -151,8 +151,12 @@ Custom property | Description | Default
         right: -1px;
         box-sizing: border-box;
         pointer-events: none;
+        @apply(--layout-horizontal);
       }
 
+      .slider-marker {
+        @apply(--layout-flex);
+      }
       .slider-markers::after,
       .slider-marker::after {
         content: "";
@@ -327,9 +331,9 @@ Custom property | Description | Default
       </div>
 
       <template is="dom-if" if="[[snaps]]">
-        <div class="slider-markers horizontal layout">
+        <div class="slider-markers">
           <template is="dom-repeat" items="[[markers]]">
-            <div class="slider-marker flex"></div>
+            <div class="slider-marker"></div>
           </template>
         </div>
       </template>

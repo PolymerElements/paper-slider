@@ -18,13 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../paper-styles/demo-pages.html">
+  <link rel="import" href="../../paper-styles/color.html">
   <link rel="import" href="../paper-slider.html">
 
   <style is="custom-style">
     body {
       padding: 40px;
     }
-    
+
     paper-slider {
       width: 100%;
     }
@@ -63,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </head>
 <body unresolved>
-  <div class="vertical center-justified layout">
+  <div class="vertical-section-container">
     <h4>Default</h4>
     <div class="vertical-section">
       <div>Oxygen</div>
@@ -80,19 +81,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <h4>Editable</h4>
     <div class="vertical-section">
-      <div class="center horizontal layout">
+      <div>
         <div>R</div>
         <paper-slider class="red" value="23" max="255" editable></paper-slider>
       </div>
-      <div class="center horizontal layout">
+      <div>
         <div>G</div>
         <paper-slider class="green" value="183" max="255" editable></paper-slider>
       </div>
-      <div class="center horizontal layout">
+      <div>
         <div>B</div>
         <paper-slider class="blue" value="211" max="255" editable></paper-slider>
       </div>
-      <div class="center horizontal layout">
+      <div>
       <div>&alpha;</div>
       <paper-slider max="1.0" step="0.01" editable></paper-slider>
       </div>
