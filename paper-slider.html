@@ -432,9 +432,7 @@ Custom property | Description | Default
        */
       maxMarkers: {
         type: Number,
-        value: 0,
-        notify: true,
-        observer: '_maxMarkersChanged'
+        value: null
       },
 
       /**
@@ -471,7 +469,8 @@ Custom property | Description | Default
     observers: [
       '_updateKnob(value, min, max, snaps, step)',
       '_valueChanged(value)',
-      '_immediateValueChanged(immediateValue)'
+      '_immediateValueChanged(immediateValue)',
+      '_updateMarkers(min, max, snaps, step, maxMarkers)'
     ],
 
     hostAttributes: {
@@ -649,13 +648,13 @@ Custom property | Description | Default
       }
     },
 
-    _maxMarkersChanged: function(maxMarkers) {
+    _updateMarkers: function() {
       if (!this.snaps) {
         this._setMarkers([]);
       }
       var steps = Math.floor((this.max - this.min) / this.step);
-      if (steps > maxMarkers) {
-        steps = maxMarkers;
+      if (this.maxMarkers && steps > this.maxMarkers) {
+        steps = this.maxMarkers;
       }
       this._setMarkers(new Array(steps));
     },

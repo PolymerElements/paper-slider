@@ -209,13 +209,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         MockInteractions.down(slider.$.sliderBar, cursor);
       });
 
+      test('markers should show when snaps is true', function(done) {
+        slider.min = 0;
+        slider.max = 100;
+        slider.snaps = true;
+        slider.step = 4;
+        flush(function() {
+          assert.equal(slider.querySelectorAll('.slider-marker').length, 25);
+          done();
+        });
+      });
+
       test('max markers', function(done) {
         slider.min = 0;
         slider.max = 100;
-        slider.snap = true;
+        slider.snaps = true;
         slider.step = 4;
         slider.maxMarkers = 10;
         flush(function() {
+          assert.equal(slider.querySelectorAll('.slider-marker').length, 10);
           assert.equal(slider.markers.length, 10);
           done();
         });
