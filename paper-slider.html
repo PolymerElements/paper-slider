@@ -589,7 +589,10 @@ Custom property | Description | Default
 
       // update knob's position
       var translateX = ((this._calcRatio(immediateValue) * this._w) - this._startx);
-      this.translate3d(translateX + 'px', 0, 0, this.$.sliderKnob);
+
+      window.requestAnimationFrame(function() {
+        this.translate3d(translateX + 'px', 0, 0, this.$.sliderKnob);
+      }.bind(this));
     },
 
     _trackEnd: function() {
