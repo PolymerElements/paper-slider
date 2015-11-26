@@ -9,15 +9,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../paper-styles/color.html">
-<link rel="import" href="../paper-progress/paper-progress.html">
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../paper-behaviors/paper-inky-focus-behavior.html">
-<link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
-<link rel="import" href="../iron-range-behavior/iron-range-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-range-behavior/iron-range-behavior.html">
+<link rel="import" href="../paper-behaviors/paper-inky-focus-behavior.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+<link rel="import" href="../paper-styles/color.html">
 
 <!--
 Material design: [Sliders](https://www.google.com/design/spec/components/sliders.html)
@@ -369,6 +368,7 @@ Custom property | Description | Default
       is: 'paper-slider',
 
       behaviors: [
+        Polymer.IronA11yKeysBehavior,
         Polymer.IronFormElementBehavior,
         Polymer.PaperInkyFocusBehavior,
         Polymer.IronRangeBehavior
