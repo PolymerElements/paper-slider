@@ -82,6 +82,16 @@ Custom property | Description | Default
         --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, --google-grey-300);
       }
 
+      :host.rtl,
+      :host[rtl] {
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        transform: scaleX(-1);
+        -ms-filter: fliph; /*IE*/
+        filter: fliph; /*IE*/
+      }
+
       /* focus shows the ripple */
       :host(:focus) {
         outline: none;
@@ -376,6 +386,15 @@ Custom property | Description | Default
 
       properties: {
         /**
+        * Direction of slider, If true, the direction of the slider is switched
+        * from left to right to right to left.
+        */
+        rtl: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
          * If true, the slider thumb snaps to tick marks evenly spaced based
          * on the `step` property value.
          */
@@ -578,8 +597,8 @@ Custom property | Description | Default
         if (!this.dragging) {
           this._trackStart(e);
         }
-
-        var dx = Math.min(this._maxx, Math.max(this._minx, e.detail.dx));
+        var reverse = (this.rtl)? -1 : 1;
+        var dx = Math.min(this._maxx, Math.max(this._minx, e.detail.dx*reverse));
         this._x = this._startx + dx;
 
         var immediateValue = this._calcStep(this._calcKnobPosition(this._x / this._w));

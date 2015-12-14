@@ -34,6 +34,13 @@ Example:
 
     <paper-slider min="10" max="200" value="110"></paper-slider>
 
+Add `rtl` attribute to switch the slider direction. Default is Left to Right.
+
+Example:
+
+    <paper-slider rtl></paper-slider>
+
+
 ### Styling
 
 The following custom properties and mixins are available for styling:
