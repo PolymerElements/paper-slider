@@ -53,5 +53,6 @@ Custom property | Description | Default
 `--paper-slider-knob-start-border-color` | The border color of the knob at the far left | `#c8c8c8`
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `#c8c8c8`
 `--paper-slider-height` | Height of the progress bar | `2px`
+`--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
 
 
