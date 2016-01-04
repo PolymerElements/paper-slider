@@ -544,7 +544,7 @@ Custom property | Description | Default
 
         this.$.sliderKnob.style.left = (this.ratio * 100) + '%';
         if (this.dragging) {
-          this._knobstartx = this.ratio * this._w || 0;
+          this._knobstartx = this.ratio * this._w;
           this.translate3d(0, 0, 0, this.$.sliderKnob);
         }
       },
@@ -571,7 +571,7 @@ Custom property | Description | Default
       _trackStart: function(event) {
         this._w = this.$.sliderBar.offsetWidth;
         this._x = this.ratio * this._w;
-        this._startx = this._x || 0;
+        this._startx = this._x;
         this._knobstartx = this._startx;
         this._minx = - this._startx;
         this._maxx = this._w - this._startx;
