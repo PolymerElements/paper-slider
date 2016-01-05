@@ -545,6 +545,10 @@ Custom property | Description | Default
         this._setRatio(this._calcRatio(this.immediateValue));
 
         this.$.sliderKnob.style.left = (this.ratio * 100) + '%';
+        if (this.dragging) {
+          this._knobstartx = this.ratio * this._w;
+          this.translate3d(0, 0, 0, this.$.sliderKnob);
+        }
       },
 
       _calcKnobPosition: function(ratio) {
@@ -569,7 +573,8 @@ Custom property | Description | Default
       _trackStart: function(event) {
         this._w = this.$.sliderBar.offsetWidth;
         this._x = this.ratio * this._w;
-        this._startx = this._x || 0;
+        this._startx = this._x;
+        this._knobstartx = this._startx;
         this._minx = - this._startx;
         this._maxx = this._w - this._startx;
         this.$.sliderKnob.classList.add('dragging');
@@ -588,7 +593,7 @@ Custom property | Description | Default
         this._setImmediateValue(immediateValue);
 
         // update knob's position
-        var translateX = ((this._calcRatio(immediateValue) * this._w) - this._startx);
+        var translateX = ((this._calcRatio(this.immediateValue) * this._w) - this._knobstartx);
         this.translate3d(translateX + 'px', 0, 0, this.$.sliderKnob);
       },
 
