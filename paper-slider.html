@@ -116,7 +116,7 @@ Custom property | Description | Default
 
       .ring > .bar-container {
         left: calc(5px + var(--paper-slider-height, 2px)/2);
-        transition: left 0.18s ease, width 0.18s ease;
+        transition: left 0.18s ease;
       }
 
       .ring.expand.dragging > .bar-container {
@@ -124,7 +124,7 @@ Custom property | Description | Default
       }
 
       .ring.expand:not(.pin) > .bar-container {
-        left: calc(15px + var(--paper-slider-height, 2px)/2);
+        left: calc(8px + var(--paper-slider-height, 2px)/2);
       }
 
       #sliderBar {
@@ -199,7 +199,7 @@ Custom property | Description | Default
         width: calc(100% - 20px);
         height: calc(100% - 20px);
         background-color: var(--paper-slider-knob-color, --google-blue-700);
-        border: 1px solid var(--paper-slider-knob-color, --google-blue-700);
+        border: 2px solid var(--paper-slider-knob-color, --google-blue-700);
         border-radius: 50%;
 
         -moz-box-sizing: border-box;
@@ -207,7 +207,7 @@ Custom property | Description | Default
 
         transition-property: -webkit-transform, background-color, border;
         transition-property: transform, background-color, border;
-        transition-duration: 0.1s;
+        transition-duration: 0.18s;
         transition-timing-function: ease;
       }
 
@@ -245,8 +245,8 @@ Custom property | Description | Default
 
       #sliderKnobInner::before,
       #sliderKnobInner::after {
-        transition: -webkit-transform .2s ease, background-color .18s ease;
-        transition: transform .2s ease, background-color .18s ease;
+        transition: -webkit-transform .18s ease, background-color .18s ease;
+        transition: transform .18s ease, background-color .18s ease;
       }
 
       .pin.ring > #sliderKnob > #sliderKnobInner::before {
@@ -303,6 +303,7 @@ Custom property | Description | Default
 
       .disabled > #sliderKnob > #sliderKnobInner {
         background-color: var(--paper-slider-disabled-knob-color, --google-grey-500);
+        border: 2px solid var(--paper-slider-disabled-knob-color, --google-grey-500);
       }
 
       .disabled.ring > #sliderKnob > #sliderKnobInner {
