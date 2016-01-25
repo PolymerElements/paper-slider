@@ -633,6 +633,9 @@ Custom property | Description | Default
 
         // cancel selection
         event.preventDefault();
+
+        // set the focus manually because we will called prevent default
+        this.focus();
       },
 
       _knobTransitionEnd: function(event) {
