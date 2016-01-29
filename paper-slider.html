@@ -648,7 +648,7 @@ Custom property | Description | Default
         if (!this.snaps) {
           this._setMarkers([]);
         }
-        var steps = Math.floor((this.max - this.min) / this.step);
+        var steps = Math.round((this.max - this.min) / this.step);
         if (steps > maxMarkers) {
           steps = maxMarkers;
         }
