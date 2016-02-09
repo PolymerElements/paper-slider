@@ -722,9 +722,9 @@ Custom property | Description | Default
         if (this.hasRipple()) {
           // note, ripple must be un-hidden prior to setting `holdDown`
           if (receivedFocusFromKeyboard) {
-            this._ripple.removeAttribute('hidden');
+            this._ripple.style.display = '';
           } else {
-            this._ripple.setAttribute('hidden', '');
+            this._ripple.style.display = 'none';
           }
           this._ripple.holdDown = receivedFocusFromKeyboard;
         }
