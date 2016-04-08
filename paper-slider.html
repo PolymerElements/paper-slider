@@ -42,6 +42,7 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
+`--paper-slider-container-color` | The background color of the bar | `--paper-grey-400`
 `--paper-slider-bar-color` | The background color of the slider | `transparent`
 `--paper-slider-active-color` | The progress bar color | `--google-blue-700`
 `--paper-slider-secondary-color` | The secondary progress bar color | `--google-blue-300`
@@ -131,7 +132,7 @@ Custom property | Description | Default
         padding: 15px 0;
         width: 100%;
         background-color: var(--paper-slider-bar-color, transparent);
-        --paper-progress-container-color: var(--paper-grey-400);
+        --paper-progress-container-color: var(--paper-slider-container-color, --paper-grey-400);
         --paper-progress-height: var(--paper-slider-height, 2px);
       }
 
@@ -301,7 +302,6 @@ Custom property | Description | Default
 
     <div id="sliderContainer"
       class$="[[_getClassNames(disabled, pin, snaps, immediateValue, min, expand, dragging, transiting, editable)]]">
-
       <div class="bar-container">
         <paper-progress
           disabled$="[[disabled]]"
