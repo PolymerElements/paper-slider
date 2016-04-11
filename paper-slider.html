@@ -458,7 +458,7 @@ Custom property | Description | Default
         '_updateKnob(value, min, max, snaps, step)',
         '_valueChanged(value)',
         '_immediateValueChanged(immediateValue)',
-        '_maxMarkersChanged(maxMarkers, min, max, snaps)
+        '_updateMarkers(maxMarkers, min, max, snaps)'
       ],
 
       hostAttributes: {
@@ -644,7 +644,7 @@ Custom property | Description | Default
         }
       },
 
-      _maxMarkersChanged: function(maxMarkers, min, max, snaps) {
+      _updateMarkers: function(maxMarkers, min, max, snaps) {
         if (!snaps) {
           this._setMarkers([]);
         }
