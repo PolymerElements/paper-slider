@@ -82,6 +82,7 @@ Custom property | Description | Default
         --paper-progress-secondary-color: var(--paper-slider-secondary-color, --google-blue-300);
         --paper-progress-disabled-active-color: var(--paper-slider-disabled-active-color, --paper-grey-400);
         --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, --paper-grey-400);
+        --calculated-paper-slider-height: var(--paper-slider-height, 2px);
       }
 
       /* focus shows the ripple */
@@ -92,9 +93,9 @@ Custom property | Description | Default
       #sliderContainer {
         position: relative;
         width: 100%;
-        height: calc(30px + var(--paper-slider-height, 2px));
-        margin-left: calc(15px + var(--paper-slider-height, 2px)/2);
-        margin-right: calc(15px + var(--paper-slider-height, 2px)/2);
+        height: calc(30px + var(--calculated-paper-slider-height));
+        margin-left: calc(15px + var(--calculated-paper-slider-height)/2);
+        margin-right: calc(15px + var(--calculated-paper-slider-height)/2);
       }
 
       #sliderContainer:focus {
@@ -116,7 +117,7 @@ Custom property | Description | Default
       }
 
       .ring > .bar-container {
-        left: calc(5px + var(--paper-slider-height, 2px)/2);
+        left: calc(5px + var(--calculated-paper-slider-height)/2);
         transition: left 0.18s ease;
       }
 
@@ -125,7 +126,7 @@ Custom property | Description | Default
       }
 
       .ring.expand:not(.pin) > .bar-container {
-        left: calc(8px + var(--paper-slider-height, 2px)/2);
+        left: calc(8px + var(--calculated-paper-slider-height)/2);
       }
 
       #sliderBar {
@@ -133,13 +134,13 @@ Custom property | Description | Default
         width: 100%;
         background-color: var(--paper-slider-bar-color, transparent);
         --paper-progress-container-color: var(--paper-slider-container-color, --paper-grey-400);
-        --paper-progress-height: var(--paper-slider-height, 2px);
+        --paper-progress-height: var(--calculated-paper-slider-height);
       }
 
       .slider-markers {
         position: absolute;
         top: calc(14px + var(--paper-slider-height,2px)/2);
-        height: var(--paper-slider-height, 2px);
+        height: var(--calculated-paper-slider-height);
         left: 0;
         right: -1px;
         box-sizing: border-box;
@@ -165,9 +166,9 @@ Custom property | Description | Default
         position: absolute;
         left: 0;
         top: 0;
-        margin-left: calc(-15px - var(--paper-slider-height, 2px)/2);
-        width: calc(30px + var(--paper-slider-height, 2px));
-        height: calc(30px + var(--paper-slider-height, 2px));
+        margin-left: calc(-15px - var(--calculated-paper-slider-height)/2);
+        width: calc(30px + var(--calculated-paper-slider-height));
+        height: calc(30px + var(--calculated-paper-slider-height));
       }
 
       .transiting > #sliderKnob {
