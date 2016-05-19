@@ -474,7 +474,7 @@ Custom property | Description | Default
       ready: function() {
         // issue polymer/polymer#1305
         this.async(function() {
-          this._updateKnob(this.value);
+          this._updateKnob(this.value, this.min, this.max);
         }, 1);
       },
 
