@@ -738,7 +738,12 @@ Custom property | Description | Default
      */
 
     /**
-     * Fired when the slider's immediateValue changes.
+     * Fired when the slider's immediateValue changes. Only occurs while the
+     * user is dragging.
+     *
+     * To detect changes to immediateValue that happen for any input (i.e.                                                          
+     * dragging, tapping, clicking, etc.) listen for immediate-value-changed
+     * instead.
      *
      * @event immediate-value-change
      */
