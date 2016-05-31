@@ -562,12 +562,12 @@ Custom property | Description | Default
         this._setDragging(true);
       },
 
-      _trackX: function(e) {
+      _trackX: function(event) {
         if (!this.dragging) {
-          this._trackStart(e);
+          this._trackStart(event);
         }
 
-        var dx = Math.min(this._maxx, Math.max(this._minx, e.detail.dx));
+        var dx = Math.min(this._maxx, Math.max(this._minx, event.detail.dx));
         this._x = this._startx + dx;
 
         var immediateValue = this._calcStep(this._calcKnobPosition(this._x / this._w));
