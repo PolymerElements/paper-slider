@@ -162,7 +162,7 @@ Custom property | Description | Default
         background-color: black;
       }
 
-      #sliderKnob {
+      .sliderKnob {
         position: absolute;
         left: 0;
         top: 0;
@@ -171,24 +171,24 @@ Custom property | Description | Default
         height: calc(30px + var(--calculated-paper-slider-height));
       }
 
-      .transiting > #sliderKnob {
+      .transiting > .sliderKnob {
         transition: left 0.08s ease;
       }
 
-      #sliderKnob:focus {
+      .sliderKnob:focus {
         outline: none;
       }
 
-      #sliderKnob.dragging {
+      .sliderKnob.dragging {
         transition: none;
       }
 
-      .snaps > #sliderKnob.dragging {
+      .snaps > .sliderKnob.dragging {
         transition: -webkit-transform 0.08s ease;
         transition: transform 0.08s ease;
       }
 
-      #sliderKnobInner {
+      .sliderKnobInner {
         margin: 10px;
         width: calc(100% - 20px);
         height: calc(100% - 20px);
@@ -205,21 +205,21 @@ Custom property | Description | Default
         transition-timing-function: ease;
       }
 
-      .expand:not(.pin) > #sliderKnob > #sliderKnobInner {
+      .expand:not(.pin) > .sliderKnob > .sliderKnobInner {
         -webkit-transform: scale(1.5);
         transform: scale(1.5);
       }
 
-      .ring > #sliderKnob > #sliderKnobInner {
+      .ring > .sliderKnob > .sliderKnobInner {
         background-color: var(--paper-slider-knob-start-color, transparent);
         border: 2px solid var(--paper-slider-knob-start-border-color, --paper-grey-400);
       }
 
-      #sliderKnobInner::before {
+      .sliderKnobInner::before {
         background-color: var(--paper-slider-pin-color, --google-blue-700);
       }
 
-      .pin > #sliderKnob > #sliderKnobInner::before {
+      .pin > .sliderKnob > .sliderKnobInner::before {
         content: "";
         position: absolute;
         top: 0;
@@ -233,22 +233,22 @@ Custom property | Description | Default
         transform: rotate(-45deg) scale(0) translate(0);
       }
 
-      #sliderKnobInner::before,
-      #sliderKnobInner::after {
+      .sliderKnobInner::before,
+      .sliderKnobInner::after {
         transition: -webkit-transform .18s ease, background-color .18s ease;
         transition: transform .18s ease, background-color .18s ease;
       }
 
-      .pin.ring > #sliderKnob > #sliderKnobInner::before {
+      .pin.ring > .sliderKnob > .sliderKnobInner::before {
         background-color: var(--paper-slider-pin-start-color, --paper-grey-400);
       }
 
-      .pin.expand > #sliderKnob > #sliderKnobInner::before {
+      .pin.expand > .sliderKnob > .sliderKnobInner::before {
         -webkit-transform: rotate(-45deg) scale(1) translate(17px, -17px);
         transform: rotate(-45deg) scale(1) translate(17px, -17px);
       }
 
-      .pin > #sliderKnob > #sliderKnobInner::after {
+      .pin > .sliderKnob > .sliderKnobInner::after {
         content: attr(value);
         position: absolute;
         top: 0;
@@ -264,7 +264,7 @@ Custom property | Description | Default
         transform: scale(0) translate(0);
       }
 
-      .pin.expand > #sliderKnob > #sliderKnobInner::after {
+      .pin.expand > .sliderKnob > .sliderKnobInner::after {
         -webkit-transform: scale(1) translate(0, -17px);
         transform: scale(1) translate(0, -17px);
       }
@@ -284,14 +284,14 @@ Custom property | Description | Default
         pointer-events: none;
       }
 
-      .disabled > #sliderKnob > #sliderKnobInner {
+      .disabled > .sliderKnob > .sliderKnobInner {
         background-color: var(--paper-slider-disabled-knob-color, --paper-grey-400);
         border: 2px solid var(--paper-slider-disabled-knob-color, --paper-grey-400);
         -webkit-transform: scale3d(0.75, 0.75, 1);
         transform: scale3d(0.75, 0.75, 1);
       }
 
-      .disabled.ring > #sliderKnob > #sliderKnobInner {
+      .disabled.ring > .sliderKnob > .sliderKnobInner {
         background-color: var(--paper-slider-knob-start-color, transparent);
         border: 2px solid var(--paper-slider-knob-start-border-color, --paper-grey-400);
       }
@@ -328,11 +328,12 @@ Custom property | Description | Default
       </template>
 
       <div id="sliderKnob"
+        class="sliderKnob"
         on-down="_knobdown"
         on-up="_resetKnob"
         on-track="_onTrack"
         on-transitionend="_knobTransitionEnd">
-          <div id="sliderKnobInner" value$="[[immediateValue]]"></div>
+          <div class="sliderKnobInner" value$="[[immediateValue]]"></div>
       </div>
     </div>
 
