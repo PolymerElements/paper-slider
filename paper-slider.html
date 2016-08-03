@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-range-behavior/iron-range-behavior.html">
 <link rel="import" href="../paper-behaviors/paper-inky-focus-behavior.html">
 <link rel="import" href="../paper-input/paper-input.html">
@@ -57,6 +58,14 @@ Custom property | Description | Default
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400`
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
+`--paper-slider-marker-color` | The color of the markers | `--paper-grey-800`
+`--paper-slider-marker-label-color` | The color of the marker labels | `black`
+`--paper-slider-marker-icon-color` | The color of the marker icons | `black`
+`--paper-slider-marker-highlight-color` | The color of highlighted marker icons or labels | `--paper-grey-500`
+`--paper-slider-marker-top-icon-y-offset` | The y-offset of top icons | `-2.3em`
+`--paper-slider-marker-bottom-icon-y-offset` | The y-offset of bottom icons | `0.6em`
+`--paper-slider-marker-top-label-y-offset` | The y-offset of top labels | `-2em`
+`--paper-slider-marker-bottom-label-y-offset` | The y-offset of bottom labels | `1em`
 
 @group Paper Elements
 @element paper-slider
@@ -83,6 +92,21 @@ Custom property | Description | Default
         --paper-progress-disabled-active-color: var(--paper-slider-disabled-active-color, --paper-grey-400);
         --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, --paper-grey-400);
         --calculated-paper-slider-height: var(--paper-slider-height, 2px);
+        --slider-marker-label-style: {
+          position: absolute;
+          display: block;
+          font-size: 11px;
+          font-weight: bold;
+          text-transform: uppercase;
+          color: var(--paper-slider-marker-label-color, black);
+          pointer-events: all;
+        }
+        --slider-marker-icon-style: {
+          position: absolute;
+          display: block;
+          color: var(--paper-slider-marker-icon-color, black);
+          pointer-events: all;
+        }
       }
 
       /* focus shows the ripple */
@@ -137,6 +161,14 @@ Custom property | Description | Default
         --paper-progress-height: var(--calculated-paper-slider-height);
       }
 
+      .highlight {
+        color: var(--paper-slider-marker-highlight-color, --paper-blue-700) !important;
+        -webkit-transition: color 0.3s ease-in;
+        -moz-transition: color 0.3s ease-in;
+        -o-transition: color 0.3s ease-in;
+        transition: color 0.3s ease-in;
+      }
+
       .slider-markers {
         position: absolute;
         top: calc(14px + var(--paper-slider-height,2px)/2);
@@ -151,15 +183,76 @@ Custom property | Description | Default
       .slider-marker {
         @apply(--layout-flex);
       }
-      .slider-markers::after,
-      .slider-marker::after {
+
+      .slider-markers:not(.invisible)::after,
+      .slider-marker:not(.invisible)::after {
         content: "";
         display: block;
         margin-left: -1px;
         width: 2px;
         height: var(--calculated-paper-slider-height);
         border-radius: 50%;
-        background-color: black;
+        background-color: var(--paper-slider-marker-color, --paper-grey-800);
+      }
+
+      .slider-marker-label {
+        @apply(--slider-marker-label-style);
+        -ms-transform: translate(-50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+        -webkit-transform: translate(-50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+        transform: translate(-50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+      }
+
+      .slider-marker-label.top {
+        @apply(--slider-marker-label-style);
+        -ms-transform: translate(-50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+        -webkit-transform: translate(-50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+        transform: translate(-50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+      }
+
+      .slider-marker-icon {
+        @apply(--slider-marker-icon-style);
+        -ms-transform: translate(-50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+        -webkit-transform: translate(-50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+        transform: translate(-50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+      }
+
+      .slider-marker-icon.top {
+        @apply(--slider-marker-icon-style);
+        -ms-transform: translate(-50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
+        -webkit-transform: translate(-50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
+        transform: translate(-50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
+      }
+
+      .slider-markers-label {
+        @apply(--slider-marker-label-style);
+        right: 0;
+        -ms-transform: translate(50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+        -webkit-transform: translate(50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+        transform: translate(50%, var(--paper-slider-marker-bottom-label-y-offset, 1em));
+      }
+
+      .slider-markers-label.top {
+        @apply(--slider-marker-label-style);
+        right: 0;
+        -ms-transform: translate(50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+        -webkit-transform: translate(50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+        transform: translate(50%, var(--paper-slider-marker-top-label-y-offset, -2em));
+      }
+
+      .slider-markers-icon {
+        @apply(--slider-marker-icon-style);
+        right: 0;
+        -ms-transform: translate(50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+        -webkit-transform: translate(50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+        transform: translate(50%, var(--paper-slider-marker-bottom-icon-y-offset, 0.6em));
+      }
+
+      .slider-markers-icon.top {
+        @apply(--slider-marker-icon-style);
+        right: 0;
+        -ms-transform: translate(50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
+        -webkit-transform: translate(50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
+        transform: translate(50%, var(--paper-slider-marker-top-icon-y-offset, -2.3em));
       }
 
       .slider-knob {
@@ -319,13 +412,44 @@ Custom property | Description | Default
         </paper-progress>
       </div>
 
-      <template is="dom-if" if="[[snaps]]">
-        <div class="slider-markers">
-          <template is="dom-repeat" items="[[markers]]">
-            <div class="slider-marker"></div>
+      <div class="slider-markers">
+        <template is="dom-repeat" items="[[markers]]"
+          filter="_isNotLastMarker" as="marker">
+          <div class$="{{_computeClass(marker)}}">
+            <template is="dom-if" if="{{marker.icon}}" restamp>
+              <iron-icon
+                class$="{{_computeIconClass(index)}} {{marker.orientation}}"
+                value="{{_computeValue(index)}}"
+                on-tap="_handleMarkerClick"
+                src="{{marker.src}}"
+                icon="{{marker.icon}}"></iron-icon>
+            </template>
+            <template is="dom-if" if="{{marker.label}}" restamp>
+              <span
+                class$="{{_computeLabelClass(index)}} {{marker.orientation}}"
+                value="{{_computeValue(index)}}"
+                on-tap="_handleMarkerClick">{{marker.label}}</span>
           </template>
         </div>
-      </template>
+        </template>
+        <template is="dom-repeat" items="{{markers}}"
+          filter="_isLastMarker" as="marker">
+          <template is="dom-if" if="{{marker.icon}}" restamp>
+            <iron-icon
+              class$="{{_computeIconClass()}} {{marker.orientation}}"
+              value="{{_computeValue()}}"
+              on-tap="_handleMarkerClick"
+              src="{{marker.src}}"
+              icon="{{marker.icon}}"></iron-icon>
+          </template>
+          <template is="dom-if" if="{{marker.label}}" restamp>
+            <span
+              class$="{{_computeLabelClass()}} {{marker.orientation}}"
+              value="{{_computeValue()}}"
+              on-tap="_handleMarkerClick">{{marker.label}}</span>
+          </template>
+        </template>
+      </div>
 
       <div id="sliderKnob"
         class="slider-knob"
@@ -449,20 +573,66 @@ Custom property | Description | Default
           readOnly: true
         },
 
+        /**
+         * An array of the markers representing each step
+         * along the slider. Each array value is an object,
+         * either empty (a plain marker), or containing
+         * a label or icon and possibly an orientation, e.g.
+         * "top" or "bottom" (default).
+         */
         markers: {
           type: Array,
-          readOnly: true,
           value: function() {
               return [];
-          }
+          },
+          notify: true
         },
+
+        /**
+         * Instead of defining every marker as an
+         * array of markers, you may instead specify
+         * an object that defines icons and/or labels
+         * that should appear along the slider.  The
+         * keys are the slider values and the key values
+         * are objects that specify the icon or label
+         * and the orientation, e.g. "top" or "bottom"
+         * (default).
+         */
+        waypoints: {
+          type: Object,
+          value: function() {
+              return {};
+          },
+          notify: true
+        },
+
+        /**
+         * Display markers along the slider, even when there
+         * is no associated label or icon for that marker.
+         * Note: This will also make the markers valid "stops"
+         * for the keyboard shortcuts, i.e. '<' and '>'.
+         */
+        showPlainMarkers: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Highlight a marker label or icon when the slider
+         * value matches the marker value.
+         */
+        enableHighlight: {
+          type: Boolean,
+          value: false
+        }
       },
 
       observers: [
         '_updateKnob(value, min, max, snaps, step)',
         '_valueChanged(value)',
         '_immediateValueChanged(immediateValue)',
-        '_updateMarkers(maxMarkers, min, max, snaps)'
+        '_updateMarkers(maxMarkers, min, max, step)',
+        '_updateWaypoints(waypoints)'
       ],
 
       hostAttributes: {
@@ -472,7 +642,9 @@ Custom property | Description | Default
 
       keyBindings: {
         'left down pagedown home': '_decrementKey',
-        'right up pageup end': '_incrementKey'
+        'right up pageup end': '_incrementKey',
+        '.': '_nextVisibleMarker',
+        ',': '_prevVisibleMarker'
       },
 
       /**
@@ -501,6 +673,10 @@ Custom property | Description | Default
 
       _valueChanged: function() {
         this.fire('value-change');
+
+        if (this.markers && this.enableHighlight) {
+          this._resetMarkerHighlight();
+        }
       },
 
       _immediateValueChanged: function() {
@@ -508,6 +684,14 @@ Custom property | Description | Default
           this.fire('immediate-value-change');
         } else {
           this.value = this.immediateValue;
+        }
+      },
+
+      _resetMarkerHighlight: function() {
+        this._removeHighlight();
+        var marker = this._visibleMarker();
+        if (marker) {
+          this._addHighlight(marker);
         }
       },
 
@@ -641,15 +825,39 @@ Custom property | Description | Default
         }
       },
 
-      _updateMarkers: function(maxMarkers, min, max, snaps) {
-        if (!snaps) {
-          this._setMarkers([]);
-        }
-        var steps = Math.round((max - min) / this.step);
+      _updateMarkers: function(maxMarkers, min, max, step) {
+        var steps = Math.round((max - min) / step);
         if (steps > maxMarkers) {
           steps = maxMarkers;
         }
+
         this._setMarkers(new Array(steps));
+      },
+
+      _setMarkers: function(markers) {
+        if (this.get('markers') === undefined) this.set('markers', []);
+
+        for (var i = 0; i < markers.length; i++) {
+          var marker = markers[i] !== undefined ? markers[i] : {};
+          this.push('markers', marker);
+        }
+      },
+
+      _updateWaypoints: function(waypoints) {
+        if (Object.keys(waypoints).length === 0) return;
+
+        var markers = [];
+        for (var i = this.min; i <= this.max; i += this.step) {
+          var marker = {};
+
+          if (waypoints.hasOwnProperty(i)) {
+            marker = waypoints[i];
+          }
+
+          markers.push(marker);
+        }
+
+        this.set('markers', markers);
       },
 
       _mergeClasses: function(classes) {
@@ -694,6 +902,59 @@ Custom property | Description | Default
         }
       },
 
+      _nextVisibleMarker: function(event) {
+        if (!this.disabled) {
+          var index = (this.value / this.step) - (this.min / this.step);
+          var markerContainers = Polymer.dom(this.root).
+                                querySelectorAll('.slider-marker');
+          var marker;
+
+          if (index === markerContainers.length) {
+            // already at the end
+            return;
+          }
+
+          for (var i = index + 1; i <= markerContainers.length; i++) {
+            if (i === markerContainers.length) {
+              marker = Polymer.dom(this.root).querySelector('.slider-markers > .marker');
+            }
+            else {
+              marker = Polymer.dom(markerContainers[i]).querySelector('.marker');
+            }
+
+            if (marker && !marker.classList.contains('invisible')) {
+              this.value = this._computeValue(i);
+              this.fire('change');
+              return marker;
+            }
+          }
+        }
+      },
+
+      _prevVisibleMarker: function(event) {
+        if (!this.disabled) {
+          var index = (this.value / this.step) - (this.min / this.step);
+          var markerContainers = Polymer.dom(this.root).
+                                querySelectorAll('.slider-marker');
+          var marker;
+
+          if (index === 0) {
+            // already at origin
+            return;
+          }
+
+          for (var i = index - 1; i >= 0; i--) {
+            marker = Polymer.dom(markerContainers[i]).querySelector('.marker');
+
+            if (marker && !marker.classList.contains('invisible')) {
+              this.value = this._computeValue(i);
+              this.fire('change');
+              return marker;
+            }
+          }
+        }
+      },
+
       _changeValue: function(event) {
         this.value = event.target.value;
         this.fire('change');
@@ -725,7 +986,101 @@ Custom property | Description | Default
           }
           this._ripple.holdDown = receivedFocusFromKeyboard;
         }
+      },
+
+      _visibleMarker: function() {
+        var index = (this.value / this.step) - (this.min / this.step);
+        var markerContainers = Polymer.dom(this.root).
+                               querySelectorAll('.slider-marker');
+        var marker;
+
+        if (index === markerContainers.length) {
+          marker = Polymer.dom(this.root).querySelector('.slider-markers > .marker');
+        }
+        else {
+          marker = Polymer.dom(markerContainers[index]).querySelector('.marker');
+        }
+
+        if (marker && !marker.classList.contains('invisible')) {
+          return marker;
+        }
+
+        return null;
+      },
+
+      _isNotLastMarker: function(marker) {
+        return marker !== this.markers[this.markers.length - 1];
+      },
+
+      _isLastMarker: function(marker) {
+        return !this._isNotLastMarker(marker);
+      },
+
+      _computeClass: function(marker) {
+        var str = "slider-marker";
+
+        if (this._markerShouldBeInvisible(marker)) {
+          str += " invisible";
+        }
+
+        return str;
+      },
+
+      _markerShouldBeInvisible: function(marker) {
+        return (marker.invisible ||
+          (Object.keys(marker).length === 0 && !this.showPlainMarkers));
+      },
+
+      _computeValue: function(index) {
+        if (index === undefined) { index = this.markers.length - 1; }
+        return (index * this.step) + this.min;
+      },
+
+      _computeIconClass: function(index) {
+        var str = "marker slider-marker";
+        if (index === undefined) { str += "s"; }
+        str += "-icon";
+
+        if (this.value === this._computeValue(index) && this.enableHighlight) {
+          str += " highlight";
+        }
+
+        return str;
+      },
+
+      _computeLabelClass: function(index) {
+        var str = "marker slider-marker";
+        if (index === undefined) { str += "s"; }
+        str += "-label";
+
+        if (this.value === this._computeValue(index) && this.enableHighlight) {
+          str += " highlight";
+        }
+
+        return str;
+      },
+
+      _addHighlight: function(marker) {
+        if (marker) {
+          marker.classList.add('highlight');
+        }
+      },
+
+      _removeHighlight: function() {
+        var marker = Polymer.dom(this.root).querySelector('.highlight');
+        if (marker) {
+          marker.classList.remove('highlight');
+        }
+      },
+
+      _handleMarkerClick: function(e) {
+        if (!this.disabled) {
+          if (this.enableHighlight) { this._removeHighlight(); }
+          this.value = e.srcElement.value;
+          this.fire('change');
+        }
       }
+
     });
 
     /**
