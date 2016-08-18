@@ -157,7 +157,7 @@ Custom property | Description | Default
         display: block;
         margin-left: -1px;
         width: 2px;
-        height: 2px;
+        height: var(--calculated-paper-slider-height);
         border-radius: 50%;
         background-color: black;
       }
@@ -736,7 +736,7 @@ Custom property | Description | Default
      * Fired when the slider's immediateValue changes. Only occurs while the
      * user is dragging.
      *
-     * To detect changes to immediateValue that happen for any input (i.e.                                                          
+     * To detect changes to immediateValue that happen for any input (i.e.
      * dragging, tapping, clicking, etc.) listen for immediate-value-changed
      * instead.
      *
