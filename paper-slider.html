@@ -452,7 +452,9 @@ Custom property | Description | Default
         markers: {
           type: Array,
           readOnly: true,
-          value: []
+          value: function () {
+              return [];
+          }
         },
       },
 
