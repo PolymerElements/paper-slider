@@ -19,6 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-icons/image-icons.html">
+  <link rel="import" href="../../iron-icons/device-icons.html">
   <link rel="import" href="../../paper-styles/color.html">
   <link rel="import" href="../paper-slider.html">
 
@@ -86,18 +88,173 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div>Grade: <span id="gradeLabel" class="caption"></span></div><br>
         <paper-slider id="grade" pin value="20" secondary-progress="70"></paper-slider>
 
+      </template>
+    </demo-snippet>
+
+    <h3>Markers may have labels or icons</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+          #markers-one, #markers-two, #markers-three {
+            padding-bottom: 30px;
+          }
+        </style>
+        <h4>
+          Labels and Icons
+        </h4>
+
+        <paper-slider
+          id="markers-one"
+          snaps
+          max="10"
+          max-markers="10"
+          step="1"
+          value="5">
+        </paper-slider>
+
+        <h4>
+          Icons only
+        </h4>
+
+        <paper-slider
+          id="markers-two"
+          snaps
+          max="8"
+          max-markers="8"
+          step="1"
+          value="6">
+        </paper-slider>
+
+        <h4>
+          Labels only
+        </h4>
+
+        <paper-slider
+          id="markers-three"
+          snaps
+          max="2"
+          max-markers="2"
+          step="1"
+          value="2">
+        </paper-slider>
+
         <script>
           document.addEventListener('WebComponentsReady', function() {
-            var ratings = document.querySelector('#ratings');
-            ratings.addEventListener('value-change', function() {
-              document.querySelector('#ratingsLabel').textContent = ratings.value;
-            });
+            var markersOne = document.querySelector('#markers-one');
+            markersOne.markers = [
+              { 'label': 'tiny' },
+              {},
+              { 'icon': 'image:photo-size-select-small' },
+              {},
+              {},
+              { 'icon': 'image:photo-size-select-large' },
+              {},
+              {},
+              { 'icon': 'image:photo-size-select-actual' },
+              {},
+              { 'label': 'huge'}
+            ];
 
-            var grade = document.querySelector('#grade');
-            grade.addEventListener('value-change', function() {
-              var label = (grade.value < grade.secondaryProgress) ? "Fail" : "Pass" ;
-              document.querySelector('#gradeLabel').textContent = grade.value + " (" + label + ")";
+            var markersTwo = document.querySelector('#markers-two');
+            markersTwo.markers = [
+              { 'icon': 'device:signal-cellular-0-bar' },
+              {},
+              { 'icon': 'device:signal-cellular-1-bar' },
+              {},
+              { 'icon': 'device:signal-cellular-2-bar' },
+              {},
+              { 'icon': 'device:signal-cellular-3-bar' },
+              {},
+              { 'icon': 'device:signal-cellular-4-bar' },
+            ];
+
+            var markersThree = document.querySelector('#markers-three');
+            markersThree.markers = [
+              { 'label': 'good' },
+              { 'label': 'better' },
+              { 'label': 'best' },
+            ];
             });
+        </script>
+      </template>
+    </demo-snippet>
+
+    <h3>Marker ticks can be displayed without a label or icon</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+          #markers-four {
+            padding-bottom: 30px;
+          }
+        </style>
+
+        <paper-slider
+          id="markers-four"
+          snaps
+          show-plain-markers
+          max="10"
+          max-markers="10"
+          step="1"
+          value="5">
+        </paper-slider>
+
+        <script>
+          document.addEventListener('WebComponentsReady', function() {
+            var markersFour = document.querySelector('#markers-four');
+            markersFour.markers = [
+              { 'label': 'tiny' },
+              {},
+              { 'icon': 'image:photo-size-select-small' },
+              {},
+              {},
+              { 'icon': 'image:photo-size-select-large' },
+              {},
+              {},
+              { 'icon': 'image:photo-size-select-actual' },
+              {},
+              { 'label': 'huge'}
+            ];
+            });
+        </script>
+      </template>
+    </demo-snippet>
+
+    <h3>Markers can be specified as waypoints</h3>
+    <demo-snippet>
+      <template>
+        <style is="custom-style">
+          #width {
+            padding-bottom: 30px;
+            --paper-slider-marker-icon-color: green;
+            --paper-slider-marker-label-color: red;
+          }
+        </style>
+
+        <div>Width: <span id="widthLabel" class="caption"></span></div><br />
+
+        <paper-slider
+          id="width"
+          pin
+          snaps
+          min="240"
+          max="1920"
+          step="8"
+          enable-highlight
+          value="640">
+        </paper-slider>
+
+        <script>
+          document.addEventListener('WebComponentsReady', function() {
+            var width = document.querySelector('#width');
+            width.waypoints = {
+              '240': { 'label': 'tiny' },
+              '480': { 'icon': 'image:photo-size-select-small' },
+              '640': { 'icon': 'image:photo-size-select-large' },
+              '960': { 'label': 'native', 'orientation': 'top' },
+              '1280': { 'icon': 'image:photo-size-select-actual' },
+              '1440': { 'icon': 'icons:favorite', 'orientation': 'top' },
+              '1920': { 'label': 'huge' },
+            };
           });
         </script>
       </template>
@@ -115,6 +272,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       grade.addEventListener('value-change', function() {
         var label = (grade.value < grade.secondaryProgress) ? "Fail" : "Pass" ;
         document.querySelector('#gradeLabel').textContent = grade.value + " (" + label + ")";
+      });
+
+      var width = document.querySelector('#width');
+      width.addEventListener('value-change', function() {
+        document.querySelector('#widthLabel').textContent = width.value + 'px';
       });
     });
   </script>
