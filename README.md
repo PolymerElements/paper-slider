@@ -62,3 +62,4 @@ The following custom properties and mixins are available for styling:
 | `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400` |
 | `--paper-slider-height` | Height of the progress bar | `2px` |
 | `--paper-slider-input` | Mixin applied to the input in editable mode | `{}` |
+| `--paper-slider-knob-size` | Size of the knob | `calc(10px + var(--paper-slider-height))` |
