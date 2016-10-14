@@ -55,6 +55,7 @@ Custom property | Description | Default
 `--paper-slider-disabled-secondary-color` | The disabled secondary progress bar color | `--paper-grey-400`
 `--paper-slider-knob-start-color` | The fill color of the knob at the far left | `transparent`
 `--paper-slider-knob-start-border-color` | The border color of the knob at the far left | `--paper-grey-400`
+`--paper-slider-knob` | Mixin applied to the knob | `{}`
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400`
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
@@ -170,6 +171,7 @@ Custom property | Description | Default
         margin-left: calc(-15px - var(--calculated-paper-slider-height)/2);
         width: calc(30px + var(--calculated-paper-slider-height));
         height: calc(30px + var(--calculated-paper-slider-height));
+        @apply(--paper-slider-knob);
       }
 
       .transiting > .slider-knob {
