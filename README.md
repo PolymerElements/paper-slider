@@ -21,5 +21,5 @@ brightness, or color saturation.
 ```
 -->
 ```html
-<paper-slider value="50">...</paper-slider>
+<paper-slider value="50"></paper-slider>
 ```
