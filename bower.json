@@ -33,7 +33,8 @@
     "test-fixture": "PolymerElements/test-fixture#custom-elements-v1",
     "iron-test-helpers": "polymerelements/iron-test-helpers#2.0-preview",
     "web-component-tester": "^4.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#v1"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#v1",
+    "accessibility-developer-tools": "bicknellr/accessibility-developer-tools#^2.11.0"
   },
   "variants": {
     "1.x": {
