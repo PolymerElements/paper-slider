@@ -502,12 +502,12 @@ Custom property | Description | Default
       },
 
       _valueChanged: function() {
-        this.fire('value-, {composed: true}change');
+        this.fire('value-change', {composed: true});
       },
 
       _immediateValueChanged: function() {
         if (this.dragging) {
-          this.fire('immediate-, {composed: true}value-change');
+          this.fire('immediate-value-change', {composed: true});
         } else {
           this.value = this.immediateValue;
         }
