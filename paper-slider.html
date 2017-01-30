@@ -59,6 +59,8 @@ Custom property | Description | Default
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400`
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
+`--paper-slider-container` | Mixin applied container of paper-slider | `{}`
+`--paper-slider-knob-inner` | Mixin applied to slider knob inner | `{}`
 
 @group Paper Elements
 @element paper-slider
@@ -98,6 +100,7 @@ Custom property | Description | Default
         height: calc(30px + var(--calculated-paper-slider-height));
         margin-left: calc(15px + var(--calculated-paper-slider-height)/2);
         margin-right: calc(15px + var(--calculated-paper-slider-height)/2);
+        @apply(--paper-slider-container);
       }
 
       #sliderContainer:focus {
@@ -206,6 +209,8 @@ Custom property | Description | Default
         transition-property: transform, background-color, border;
         transition-duration: 0.18s;
         transition-timing-function: ease;
+
+        @apply(--paper-slider-knob-inner);
       }
 
       .expand:not(.pin) > .slider-knob > .slider-knob-inner {
