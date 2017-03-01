@@ -30,11 +30,10 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
     "iron-demo-helpers": "polymerelements/iron-demo-helpers#2.0-preview",
-    "test-fixture": "PolymerElements/test-fixture#^2.0.0",
     "iron-test-helpers": "polymerelements/iron-test-helpers#2.0-preview",
-    "web-component-tester": "v6.0.0-prerelease.5",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#v1",
-    "accessibility-developer-tools": "bicknellr/accessibility-developer-tools#^2.11.0"
+    "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.1"
   },
   "variants": {
     "1.x": {
@@ -54,14 +53,9 @@
         "iron-demo-helpers": "polymerelements/iron-demo-helpers#^1.0.0",
         "test-fixture": "PolymerElements/test-fixture#^1.0.0",
         "iron-test-helpers": "polymerelements/iron-test-helpers#^1.0.0",
-        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+        "web-component-tester": "Polymer/web-component-tester#^4.0.0"
       }
     }
-  },
-  "resolutions": {
-    "iron-form-element-behavior": "2.0-preview",
-    "test-fixture": "^2.0.0",
-    "polymer": "2.0-preview",
-    "webcomponentsjs": "v1"
   }
 }
