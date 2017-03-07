@@ -17,7 +17,7 @@
   },
   "ignore": [],
   "dependencies": {
-    "polymer": "Polymer/polymer#2.0-preview",
+    "polymer": "Polymer/polymer#^2.0.0-rc.1",
     "paper-input": "PolymerElements/paper-input#2.0-preview",
     "paper-progress": "PolymerElements/paper-progress#2.0-preview",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#2.0-preview",
