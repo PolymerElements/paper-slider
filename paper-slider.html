@@ -334,7 +334,7 @@ Custom property | Description | Default
         on-up="_resetKnob"
         on-track="_onTrack"
         on-transitionend="_knobTransitionEnd">
-          <div class="slider-knob-inner" value$="[[immediateValue]]"></div>
+          <div class="slider-knob-inner" value$="[[_getPinLabel(pinLabel, immediateValue)]]"></div>
       </div>
     </div>
 
@@ -386,6 +386,14 @@ Custom property | Description | Default
           type: Boolean,
           value: false,
           notify: true
+        },
+
+        /**
+         * If set, a this text will be used in the pin instead of just the numeric
+         * number. Use if you need to format the label in any way.
+         */
+        pinLabel: {
+          type: String
         },
 
         /**
@@ -707,6 +715,10 @@ Custom property | Description | Default
 
       _inputKeyDown: function(event) {
         event.stopPropagation();
+      },
+
+      _getPinLabel: function(pinLabel, value) {
+        return pinLabel ? pinLabel : value;
       },
 
       // create the element ripple inside the `sliderKnob`
