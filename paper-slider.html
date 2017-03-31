@@ -173,8 +173,7 @@ Custom property | Description | Default
       }
 
       .transiting > .slider-knob {
-        transition: left 1.08s ease;
-        /*transition: left 0.08s ease;*/
+        transition: left 0.08s ease;
       }
 
       .slider-knob:focus {
@@ -624,7 +623,6 @@ Custom property | Description | Default
         // Therefore, we need to manually update the `transiting` state
 
         if (prevRatio === this.ratio) {
-          console.log('bardown false');
           this._setTransiting(false);
         }
 
@@ -641,7 +639,6 @@ Custom property | Description | Default
 
       _knobTransitionEnd: function(event) {
         if (event.target === this.$.sliderKnob) {
-          console.log('knobend false');
           this._setTransiting(false);
         }
       },
