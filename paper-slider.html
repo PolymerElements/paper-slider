@@ -90,6 +90,10 @@ Custom property | Description | Default
       :host(:focus) {
         outline: none;
       }
+        
+      :host-context([dir="rtl"]) {
+        transform: scaleX(-1);
+      }
 
       #sliderContainer {
         position: relative;
@@ -472,8 +476,8 @@ Custom property | Description | Default
       },
 
       keyBindings: {
-        'left down pagedown home': '_decrementKey',
-        'right up pageup end': '_incrementKey'
+        'left down pagedown home': '_leftKey',
+        'right up pageup end': '_rightKey'
       },
 
       /**
@@ -571,7 +575,9 @@ Custom property | Description | Default
           this._trackStart(event);
         }
 
-        var dx = Math.min(this._maxx, Math.max(this._minx, event.detail.dx));
+        var direction = this._isRTL ? -1 : 1;
+        var dx = Math.min(
+            this._maxx, Math.max(this._minx, event.detail.dx * direction));
         this._x = this._startx + dx;
 
         var immediateValue = this._calcStep(this._calcKnobPosition(this._x / this._w));
@@ -676,9 +682,30 @@ Custom property | Description | Default
         });
       },
 
-      _incrementKey: function(event) {
+      get _isRTL() {
+        if (this.__isRTL === undefined) {
+          this.__isRTL = window.getComputedStyle(this)['direction'] === 'rtl';
+        }
+        return this.__isRTL;
+      },
+
+      _leftKey: function(event) {
+        if (this._isRTL)
+          this._incrementKey(event, 'home');
+        else
+          this._decrementKey(event, 'home');
+      },
+
+      _rightKey: function(event) {
+        if (this._isRTL)
+          this._decrementKey(event, 'end');
+        else
+          this._incrementKey(event, 'end');
+      },
+
+      _incrementKey: function(event, allTheWayKey) {
         if (!this.disabled) {
-          if (event.detail.key === 'end') {
+          if (event.detail.key === allTheWayKey) {
             this.value = this.max;
           } else {
             this.increment();
@@ -688,9 +715,9 @@ Custom property | Description | Default
         }
       },
 
-      _decrementKey: function(event) {
+      _decrementKey: function(event, allTheWayKey) {
         if (!this.disabled) {
-          if (event.detail.key === 'home') {
+          if (event.detail.key === allTheWayKey) {
             this.value = this.min;
           } else {
             this.decrement();
