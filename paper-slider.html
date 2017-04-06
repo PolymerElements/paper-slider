@@ -476,8 +476,10 @@ Custom property | Description | Default
       },
 
       keyBindings: {
-        'left down pagedown home': '_leftKey',
-        'right up pageup end': '_rightKey'
+        'left': '_leftKey',
+        'right': '_rightKey',
+        'down pagedown home': '_decrementKey',
+        'up pageup end': '_incrementKey'
       },
 
       /**
@@ -691,21 +693,21 @@ Custom property | Description | Default
 
       _leftKey: function(event) {
         if (this._isRTL)
-          this._incrementKey(event, 'home');
+          this._incrementKey(event);
         else
-          this._decrementKey(event, 'home');
+          this._decrementKey(event);
       },
 
       _rightKey: function(event) {
         if (this._isRTL)
-          this._decrementKey(event, 'end');
+          this._decrementKey(event);
         else
-          this._incrementKey(event, 'end');
+          this._incrementKey(event);
       },
 
-      _incrementKey: function(event, allTheWayKey) {
+      _incrementKey: function(event) {
         if (!this.disabled) {
-          if (event.detail.key === allTheWayKey) {
+          if (event.detail.key === 'end') {
             this.value = this.max;
           } else {
             this.increment();
@@ -715,9 +717,9 @@ Custom property | Description | Default
         }
       },
 
-      _decrementKey: function(event, allTheWayKey) {
+      _decrementKey: function(event) {
         if (!this.disabled) {
-          if (event.detail.key === allTheWayKey) {
+          if (event.detail.key === 'home') {
             this.value = this.min;
           } else {
             this.decrement();
