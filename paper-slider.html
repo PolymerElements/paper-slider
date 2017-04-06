@@ -92,6 +92,7 @@ Custom property | Description | Default
       }
         
       :host-context([dir="rtl"]) {
+        -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
       }
 
@@ -617,6 +618,9 @@ Custom property | Description | Default
         this._w = this.$.sliderBar.offsetWidth;
         var rect = this.$.sliderBar.getBoundingClientRect();
         var ratio = (event.detail.x - rect.left) / this._w;
+        if (this._isRTL) {
+          ratio = 1 - ratio;
+        }
         var prevRatio = this.ratio;
 
         this._setTransiting(true);
