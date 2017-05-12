@@ -69,9 +69,9 @@ Custom property | Description | Default
   <template strip-whitespace>
     <style>
       :host {
-        @apply(--layout);
-        @apply(--layout-justified);
-        @apply(--layout-center);
+        @apply --layout;
+        @apply --layout-justified;
+        @apply --layout-center;
         width: 200px;
         cursor: default;
         -webkit-user-select: none;
@@ -79,10 +79,10 @@ Custom property | Description | Default
         -ms-user-select: none;
         user-select: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        --paper-progress-active-color: var(--paper-slider-active-color, --google-blue-700);
-        --paper-progress-secondary-color: var(--paper-slider-secondary-color, --google-blue-300);
-        --paper-progress-disabled-active-color: var(--paper-slider-disabled-active-color, --paper-grey-400);
-        --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, --paper-grey-400);
+        --paper-progress-active-color: var(--paper-slider-active-color, var(--google-blue-700));
+        --paper-progress-secondary-color: var(--paper-slider-secondary-color, var(--google-blue-300));
+        --paper-progress-disabled-active-color: var(--paper-slider-disabled-active-color, var(--paper-grey-400));
+        --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, var(--paper-grey-400));
         --calculated-paper-slider-height: var(--paper-slider-height, 2px);
       }
 
@@ -139,7 +139,7 @@ Custom property | Description | Default
         padding: 15px 0;
         width: 100%;
         background-color: var(--paper-slider-bar-color, transparent);
-        --paper-progress-container-color: var(--paper-slider-container-color, --paper-grey-400);
+        --paper-progress-container-color: var(--paper-slider-container-color, var(--paper-grey-400));
         --paper-progress-height: var(--calculated-paper-slider-height);
       }
 
@@ -151,11 +151,11 @@ Custom property | Description | Default
         right: -1px;
         box-sizing: border-box;
         pointer-events: none;
-        @apply(--layout-horizontal);
+        @apply --layout-horizontal;
       }
 
       .slider-marker {
-        @apply(--layout-flex);
+        @apply --layout-flex;
       }
       .slider-markers::after,
       .slider-marker::after {
@@ -198,8 +198,8 @@ Custom property | Description | Default
         margin: 10px;
         width: calc(100% - 20px);
         height: calc(100% - 20px);
-        background-color: var(--paper-slider-knob-color, --google-blue-700);
-        border: 2px solid var(--paper-slider-knob-color, --google-blue-700);
+        background-color: var(--paper-slider-knob-color, var(--google-blue-700));
+        border: 2px solid var(--paper-slider-knob-color, var(--google-blue-700));
         border-radius: 50%;
 
         -moz-box-sizing: border-box;
@@ -218,11 +218,11 @@ Custom property | Description | Default
 
       .ring > .slider-knob > .slider-knob-inner {
         background-color: var(--paper-slider-knob-start-color, transparent);
-        border: 2px solid var(--paper-slider-knob-start-border-color, --paper-grey-400);
+        border: 2px solid var(--paper-slider-knob-start-border-color, var(--paper-grey-400));
       }
 
       .slider-knob-inner::before {
-        background-color: var(--paper-slider-pin-color, --google-blue-700);
+        background-color: var(--paper-slider-pin-color, var(--google-blue-700));
       }
 
       .pin > .slider-knob > .slider-knob-inner::before {
@@ -246,7 +246,7 @@ Custom property | Description | Default
       }
 
       .pin.ring > .slider-knob > .slider-knob-inner::before {
-        background-color: var(--paper-slider-pin-start-color, --paper-grey-400);
+        background-color: var(--paper-slider-pin-start-color, var(--paper-grey-400));
       }
 
       .pin.expand > .slider-knob > .slider-knob-inner::before {
@@ -282,7 +282,7 @@ Custom property | Description | Default
         --paper-input-container-input: {
           text-align: center;
         };
-        @apply(--paper-slider-input);
+        @apply --paper-slider-input;
       }
 
       /* disabled state */
@@ -291,19 +291,19 @@ Custom property | Description | Default
       }
 
       .disabled > .slider-knob > .slider-knob-inner {
-        background-color: var(--paper-slider-disabled-knob-color, --paper-grey-400);
-        border: 2px solid var(--paper-slider-disabled-knob-color, --paper-grey-400);
+        background-color: var(--paper-slider-disabled-knob-color, var(--paper-grey-400));
+        border: 2px solid var(--paper-slider-disabled-knob-color, var(--paper-grey-400));
         -webkit-transform: scale3d(0.75, 0.75, 1);
         transform: scale3d(0.75, 0.75, 1);
       }
 
       .disabled.ring > .slider-knob > .slider-knob-inner {
         background-color: var(--paper-slider-knob-start-color, transparent);
-        border: 2px solid var(--paper-slider-knob-start-border-color, --paper-grey-400);
+        border: 2px solid var(--paper-slider-knob-start-border-color, var(--paper-grey-400));
       }
 
       paper-ripple {
-        color: var(--paper-slider-knob-color, --google-blue-700);
+        color: var(--paper-slider-knob-color, var(--google-blue-700));
       }
     </style>
 
@@ -508,12 +508,12 @@ Custom property | Description | Default
       },
 
       _valueChanged: function() {
-        this.fire('value-change');
+        this.fire('value-change', {composed: true});
       },
 
       _immediateValueChanged: function() {
         if (this.dragging) {
-          this.fire('immediate-value-change');
+          this.fire('immediate-value-change', {composed: true});
         } else {
           this.value = this.immediateValue;
         }
@@ -563,6 +563,7 @@ Custom property | Description | Default
       },
 
       _trackStart: function(event) {
+        this._setTransiting(false);
         this._w = this.$.sliderBar.offsetWidth;
         this._x = this.ratio * this._w;
         this._startx = this._x;
@@ -601,7 +602,7 @@ Custom property | Description | Default
 
         s.transform = s.webkitTransform = '';
 
-        this.fire('change');
+        this.fire('change', {composed: true});
       },
 
       _knobdown: function(event) {
@@ -638,7 +639,7 @@ Custom property | Description | Default
         }
 
         this.async(function() {
-          this.fire('change');
+          this.fire('change', {composed: true});
         });
 
         // cancel selection
@@ -735,7 +736,7 @@ Custom property | Description | Default
 
       _changeValue: function(event) {
         this.value = event.target.value;
-        this.fire('change');
+        this.fire('change', {composed: true});
       },
 
       _inputKeyDown: function(event) {
