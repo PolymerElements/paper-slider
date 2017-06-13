@@ -563,6 +563,7 @@ Custom property | Description | Default
       },
 
       _trackStart: function(event) {
+        this._setRatio(this._calcRatio(this.immediateValue));
         this._setTransiting(false);
         this._w = this.$.sliderBar.offsetWidth;
         this._x = this.ratio * this._w / 100;
