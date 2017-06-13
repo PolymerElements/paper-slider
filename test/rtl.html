@@ -28,6 +28,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="cssDirectionRtl">
+    <template>
+      <paper-slider value="50" style="direction: rtl;"></paper-slider>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="nestedDirAttributes">
+    <template>
+      <div dir="rtl">
+        <paper-slider value="50" dir="ltr"></paper-slider>
+      </div>
+    </template>
+  </test-fixture>
+
   <script>
     suite('<paper-slider>', function() {
       var slider;
@@ -98,6 +112,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slider.dispatchEvent(down);
         assert.equal(oldValue - slider.step, slider.value);
         assert.isTrue(down.defaultPrevented);
+      });
+
+      test('css direction works', function() {
+        assert.isTrue(fixture('cssDirectionRtl')._isRTL);
+      });
+
+      test('nested [dir] attributes work', function() {
+        assert.isFalse(fixture('nestedDirAttributes').firstElementChild._isRTL);
       });
     });
 

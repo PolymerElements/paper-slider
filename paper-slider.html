@@ -91,7 +91,7 @@ Custom property | Description | Default
         outline: none;
       }
         
-      :host-context([dir="rtl"]) #sliderContainer {
+      :host([_is-r-t-l]) #sliderContainer {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
       }
@@ -462,6 +462,11 @@ Custom property | Description | Default
               return [];
           }
         },
+
+        _isRTL: {
+          type: Boolean,
+          reflectToAttribute: true,
+        },
       },
 
       observers: [
@@ -481,6 +486,10 @@ Custom property | Description | Default
         'right': '_rightKey',
         'down pagedown home': '_decrementKey',
         'up pageup end': '_incrementKey'
+      },
+
+      attached: function() {
+        this._isRTL = window.getComputedStyle(this)['direction'] === 'rtl';
       },
 
       /**
@@ -687,13 +696,6 @@ Custom property | Description | Default
           transiting: this.transiting,
           editable: this.editable
         });
-      },
-
-      get _isRTL() {
-        if (this.__isRTL === undefined) {
-          this.__isRTL = window.getComputedStyle(this)['direction'] === 'rtl';
-        }
-        return this.__isRTL;
       },
 
       _leftKey: function(event) {
