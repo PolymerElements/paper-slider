@@ -90,10 +90,33 @@ Custom property | Description | Default
       :host(:focus) {
         outline: none;
       }
-        
+
+      /** 
+       * NOTE(keanulee): Though :host-context is not universally supported, some pages
+       * still rely on paper-slider being flipped when dir="rtl" is set on body. For full
+       * compatability, dir="rtl" must be explicitly set on paper-slider.
+       */
       :host-context([dir="rtl"]) #sliderContainer {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
+      }
+
+      /** 
+       * NOTE(keanulee): This is separate from the rule above because :host-context may
+       * not be recognized.
+       */
+      :host([dir="rtl"]) #sliderContainer {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+      }
+
+      /** 
+       * NOTE(keanulee): Needed to override the :host-context rule (where supported)
+       * to support LTR sliders in RTL pages.
+       */
+      :host([dir="ltr"]) #sliderContainer {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
       }
 
       #sliderContainer {
