@@ -58,6 +58,7 @@ Custom property | Description | Default
 `--paper-slider-pin-start-color` | The color of the pin at the far left | `--paper-grey-400`
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
+`--paper-slider-knob-size` | Size of the knob | `calc(10px + var(--paper-slider-height))`
 
 @group Paper Elements
 @element paper-slider
@@ -84,6 +85,7 @@ Custom property | Description | Default
         --paper-progress-disabled-active-color: var(--paper-slider-disabled-active-color, var(--paper-grey-400));
         --paper-progress-disabled-secondary-color: var(--paper-slider-disabled-secondary-color, var(--paper-grey-400));
         --calculated-paper-slider-height: var(--paper-slider-height, 2px);
+        --calculated-paper-slider-knob-size: var(--paper-slider-knob-size, 10px);
       }
 
       /* focus shows the ripple */
@@ -122,9 +124,9 @@ Custom property | Description | Default
       #sliderContainer {
         position: relative;
         width: 100%;
-        height: calc(30px + var(--calculated-paper-slider-height));
-        margin-left: calc(15px + var(--calculated-paper-slider-height)/2);
-        margin-right: calc(15px + var(--calculated-paper-slider-height)/2);
+        height: calc(20px + var(--calculated-paper-slider-knob-size) + var(--calculated-paper-slider-height));
+        margin-left: calc(10px + var(--calculated-paper-slider-knob-size)/2 + var(--calculated-paper-slider-height)/2);
+        margin-right: calc(10px + var(--calculated-paper-slider-knob-size)/2 + var(--calculated-paper-slider-height)/2);
       }
 
       #sliderContainer:focus {
@@ -146,7 +148,7 @@ Custom property | Description | Default
       }
 
       .ring > .bar-container {
-        left: calc(5px + var(--calculated-paper-slider-height)/2);
+        left: calc(var(--calculated-paper-slider-knob-size)/2 + var(--calculated-paper-slider-height));
         transition: left 0.18s ease;
       }
 
@@ -159,7 +161,8 @@ Custom property | Description | Default
       }
 
       #sliderBar {
-        padding: 15px 0;
+        padding: 0;
+        padding-top: calc(var(--calculated-paper-slider-knob-size)/2 + 10px );
         width: 100%;
         background-color: var(--paper-slider-bar-color, transparent);
         --paper-progress-container-color: var(--paper-slider-container-color, var(--paper-grey-400));
@@ -195,9 +198,9 @@ Custom property | Description | Default
         position: absolute;
         left: 0;
         top: 0;
-        margin-left: calc(-15px - var(--calculated-paper-slider-height)/2);
-        width: calc(30px + var(--calculated-paper-slider-height));
-        height: calc(30px + var(--calculated-paper-slider-height));
+        margin-left: calc(0px - 10px - var(--calculated-paper-slider-knob-size) / 2 - var(--calculated-paper-slider-height));
+        width: calc(var(--calculated-paper-slider-knob-size) + var(--calculated-paper-slider-height) + 20px);
+        height: calc(var(--calculated-paper-slider-knob-size) + var(--calculated-paper-slider-height) + 20px);
       }
 
       .transiting > .slider-knob {
