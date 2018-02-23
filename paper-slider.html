@@ -667,13 +667,11 @@ Custom property | Description | Default
         var prevRatio = this.ratio;
 
         this._setTransiting(true);
-
         this._positionKnob(ratio);
 
         // if the ratio doesn't change, sliderKnob's animation won't start
         // and `_knobTransitionEnd` won't be called
         // Therefore, we need to manually update the `transiting` state
-
         if (prevRatio === this.ratio) {
           this._setTransiting(false);
         }
@@ -687,7 +685,6 @@ Custom property | Description | Default
 
         // set the focus manually because we will called prevent default
         this.focus();
-
       },
 
       _bardown: function(event) {
