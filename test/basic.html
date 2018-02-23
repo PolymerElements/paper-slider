@@ -167,7 +167,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slider.step = 1;
         slider.value = 0;
 
-        MockInteractions.click(slider.$.sliderBar, cursor);
+        MockInteractions.down(slider.$.sliderBar, cursor);
+        MockInteractions.up(slider.$.sliderBar, cursor);
 
         flush(function() {
           assert.equal(slider.value, slider.max);
@@ -221,7 +222,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         slider.min = 0;
         slider.max = 100;
-        MockInteractions.click(slider.$.sliderBar, cursor);
+        MockInteractions.down(slider.$.sliderBar, cursor);
+        MockInteractions.up(slider.$.sliderBar, cursor);
       });
 
       test('max markers', function(done) {

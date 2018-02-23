@@ -45,7 +45,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         slider.step = 1;
         slider.value = 2;
 
-        MockInteractions.click(slider.$.sliderBar, cursor);
+        MockInteractions.down(slider.$.sliderBar, cursor);
+        MockInteractions.up(slider.$.sliderBar, cursor);
 
         flush(function() {
           assert.equal(slider.value, slider.min);
