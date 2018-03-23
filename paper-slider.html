@@ -59,6 +59,7 @@ Custom property | Description | Default
 `--paper-slider-height` | Height of the progress bar | `2px`
 `--paper-slider-input` | Mixin applied to the input in editable mode | `{}`
 `--paper-slider-input-container-input` | Mixin applied to the paper-input-container-input in editable mode | `{}`
+`--paper-slider-pin-font-size` | The font size of the pin | `10px`
 
 @group Paper Elements
 @element paper-slider
@@ -249,16 +250,22 @@ Custom property | Description | Default
         background-color: var(--paper-slider-pin-color, var(--google-blue-700));
       }
 
+      .pin > .slider-knob > .slider-knob-inner {
+        font-size:  var(--paper-slider-pin-font-size, 10px);
+        line-height: normal;
+      }
+
       .pin > .slider-knob > .slider-knob-inner::before {
         content: "";
         position: absolute;
-        top: 0;
+        bottom: calc(15px + var(--calculated-paper-slider-height)/2);
         left: 50%;
-        margin-left: -13px;
-        width: 26px;
-        height: 26px;
+        width: 2.6em;
+        height: 2.6em;
         border-radius: 50% 50% 50% 0;
 
+        -webkit-transform-origin: left bottom;
+        transform-origin: left bottom;
         -webkit-transform: rotate(-45deg) scale(0) translate(0);
         transform: rotate(-45deg) scale(0) translate(0);
       }
@@ -274,29 +281,30 @@ Custom property | Description | Default
       }
 
       .pin.expand > .slider-knob > .slider-knob-inner::before {
-        -webkit-transform: rotate(-45deg) scale(1) translate(17px, -17px);
-        transform: rotate(-45deg) scale(1) translate(17px, -17px);
+        -webkit-transform: rotate(-45deg) scale(1) translate(6px, -6px);
+        transform: rotate(-45deg) scale(1) translate(6px, -6px);
       }
 
       .pin > .slider-knob > .slider-knob-inner::after {
         content: attr(value);
         position: absolute;
-        top: 0;
+        bottom: calc(15px + var(--calculated-paper-slider-height)/2);
         left: 50%;
-        margin-left: -16px;
-        width: 32px;
-        height: 26px;
+        margin-left: -1.3em;
+        width: 2.6em;
+        height: 2.4em;
         text-align: center;
         color: var(--paper-slider-font-color, #fff);
-        font-size: 10px;
 
+        -webkit-transform-origin: center bottom;
+        transform-origin: center bottom;
         -webkit-transform: scale(0) translate(0);
         transform: scale(0) translate(0);
       }
 
       .pin.expand > .slider-knob > .slider-knob-inner::after {
-        -webkit-transform: scale(1) translate(0, -17px);
-        transform: scale(1) translate(0, -17px);
+        -webkit-transform: scale(1) translate(0, -8.5px);
+        transform: scale(1) translate(0, -8.5px);
       }
 
       /* paper-input */
@@ -524,7 +532,7 @@ Custom property | Description | Default
           Polymer.Gestures.setTouchAction(this.$.sliderBar, 'auto');
         }
       },
-      
+
       /**
        * Increases value by `step` but not above `max`.
        * @method increment
