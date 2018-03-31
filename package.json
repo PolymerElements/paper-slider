@@ -1,0 +1,10 @@
+{
+  "name": "@polymer/paper-slider",
+  "private": true,
+  "description": "A material design-style slider",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/paper-slider.git"
+  },
+  "license": "BSD-3-Clause"
+}
