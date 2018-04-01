@@ -62,6 +62,7 @@
  */
 interface PaperSliderElement extends Polymer.Element, Polymer.IronA11yKeysBehavior, Polymer.IronFormElementBehavior, Polymer.PaperInkyFocusBehavior, Polymer.IronRangeBehavior {
   keyBindings: object|null;
+  value: number|null|undefined;
 
   /**
    * If true, the slider thumb snaps to tick marks evenly spaced based
