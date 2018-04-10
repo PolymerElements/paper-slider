@@ -125,7 +125,7 @@ interface PaperSliderElement extends Polymer.Element, Polymer.IronA11yKeysBehavi
   _createRipple(): any;
 
   /**
-   * according to spec: https://www.google.com/design/spec/components/sliders.html
+   * https://www.google.com/design/spec/components/sliders.html
    */
   _focusedChanged(receivedFocusFromKeyboard: any): void;
 
