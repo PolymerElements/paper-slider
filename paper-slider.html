@@ -169,7 +169,8 @@ Custom property | Description | Default
 
       .slider-markers {
         position: absolute;
-        top: calc(14px + var(--paper-slider-height,2px)/2);
+        /* slider-knob is 30px + the slider-height so that the markers should start at a offset of 15px*/
+        top: 15px;
         height: var(--calculated-paper-slider-height);
         left: 0;
         right: -1px;
