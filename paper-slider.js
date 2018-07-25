@@ -103,7 +103,7 @@ $_documentContainer.innerHTML = `<dom-module id="paper-slider">
       /**
        * NOTE(keanulee): Though :host-context is not universally supported, some pages
        * still rely on paper-slider being flipped when dir="rtl" is set on body. For full
-       * compatability, dir="rtl" must be explicitly set on paper-slider.
+       * compatibility, dir="rtl" must be explicitly set on paper-slider.
        */
       :dir(rtl) #sliderContainer {
         -webkit-transform: scaleX(-1);
@@ -366,7 +366,7 @@ $_documentContainer.innerHTML = `<dom-module id="paper-slider">
     </template>
   </template>
 
-  
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
