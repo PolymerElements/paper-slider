@@ -492,6 +492,7 @@ Polymer({
     tabindex: 0,
   },
 
+  /** @type {!Object} */
   keyBindings: {
     'left': '_leftKey',
     'right': '_rightKey',
