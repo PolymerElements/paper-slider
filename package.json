@@ -37,7 +37,7 @@
     "@polymer/paper-progress": "^3.0.0-pre.26",
     "@polymer/iron-flex-layout": "^3.0.0-pre.26",
     "@polymer/paper-styles": "^3.0.0-pre.26",
-    "@polymer/iron-behaviors": "^3.0.0-pre.26",
+    "@polymer/iron-range-behavior": "^3.0.0-pre.26",
     "@polymer/paper-behaviors": "^3.0.0-pre.27",
     "@polymer/iron-a11y-keys-behavior": "^3.0.0-pre.26",
     "@polymer/iron-form-element-behavior": "^3.0.0-pre.26"
