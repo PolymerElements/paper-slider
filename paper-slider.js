@@ -254,6 +254,16 @@ const template = html`
       transform: scale(1) translate(0, -17px);
     }
 
+    :dir(rtl) .pin.expand > .slider-knob > .slider-knob-inner::after {
+      -webkit-transform: scale(1) translate(0, -17px) scaleX(-1);
+      transform: scale(1) translate(0, -17px) scaleX(-1);
+    }
+
+    :host([dir="rtl"]) .pin.expand > .slider-knob > .slider-knob-inner::after {
+      -webkit-transform: scale(1) translate(0, -17px) scaleX(-1);
+      transform: scale(1) translate(0, -17px) scaleX(-1);
+    }
+    
     /* paper-input */
     .slider-input {
       width: 50px;
