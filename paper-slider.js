@@ -500,6 +500,7 @@ Polymer({
     'up pageup end': '_incrementKey',
   },
 
+  /** @override */
   ready: function() {
     if (this.ignoreBarTouch) {
       setTouchAction(this.$.sliderBar, 'auto');
