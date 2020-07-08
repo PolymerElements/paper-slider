@@ -84,10 +84,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       test('slider increments on right key', function() {
         var oldValue = slider.value;
-        var up = MockInteractions.keyboardEventFor('keydown', 39);
-        slider.dispatchEvent(up);
+        var right = MockInteractions.keyboardEventFor('keydown', 39);
+        slider.dispatchEvent(right);
         assert.equal(oldValue + slider.step, slider.value);
-        assert.isTrue(up.defaultPrevented);
+        assert.isTrue(right.defaultPrevented);
       });
 
       test('slider decrements on left key', function() {
