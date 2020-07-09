@@ -229,7 +229,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('max markers', function(done) {
         slider.min = 0;
         slider.max = 100;
-        slider.snap = true;
+        slider.snaps = true;
         slider.step = 4;
         slider.maxMarkers = 10;
         flush(function() {
@@ -241,7 +241,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('decimal markers', function(done) {
         slider.min = 0;
         slider.max = 0.7;
-        slider.snap = true;
+        slider.snaps = true;
         slider.step = 0.1;
         slider.maxMarkers = 10;
         flush(function() {
